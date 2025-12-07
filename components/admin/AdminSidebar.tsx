@@ -30,11 +30,11 @@ export default function AdminSidebar() {
   ];
 
   return (
-    <div className="h-screen w-64 bg-gradient-to-b from-gray-900 to-gray-800 text-white flex flex-col fixed left-0 top-0 shadow-2xl">
+    <div className="h-screen w-64 bg-linear-to-b from-gray-900 to-gray-800 text-white flex flex-col fixed left-0 top-0 shadow-2xl">
       {/* Logo */}
       <div className="p-6 border-b border-gray-700">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+          <div className="w-10 h-10 bg-linear-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
@@ -56,7 +56,7 @@ export default function AdminSidebar() {
               onClick={() => handleNavigation(item.href)}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                 isActive
-                  ? "bg-gradient-to-r from-green-600 to-emerald-600 shadow-lg"
+                  ? "bg-linear-to-r from-green-600 to-emerald-600 shadow-lg"
                   : "hover:bg-gray-700/50"
               }`}
             >
