@@ -1,9 +1,15 @@
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search, User, ShoppingCart } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
-  return (
+  const pathname = usePathname();
+  
+  if (pathname?.startsWith('/admin')) return null;
+return (
     <nav className="bg-white border-b-2 border-green-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
