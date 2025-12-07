@@ -1,0 +1,16 @@
+export const PRODUCT_CATEGORIES = [
+  "Nitrogen Fertilizers",
+  "Phosphate Fertilizers",
+  "Potassium Fertilizers",
+  "Compound/NPK Fertilizers",
+  "Micronutrient Fertilizers",
+  "Organic Fertilizers",
+  "Liquid Fertilizers",
+  "Foliar Fertilizers",
+  "Slow-Release Fertilizers",
+  "Water-Soluble Fertilizers",
+  "Mineral Fertilizers",
+  "Biofertilizers",
+  "Acid Fertilizers",
+  "Alkaline Fertilizers",
+] as const;
