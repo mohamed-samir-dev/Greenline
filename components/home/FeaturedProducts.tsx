@@ -24,18 +24,18 @@ export default function FeaturedProducts() {
   }, []);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
       <div>
-        <h2 className="text-2xl text-black font-bold mb-6">
+        <h2 className="text-xl sm:text-2xl text-black font-bold mb-4 sm:mb-6">
           Featured Products
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {products.map((product, index) => (
             <div
               key={product.id}
               className="bg-green-50 rounded-2xl overflow-hidden shadow-sm"
             >
-              <div className={`${bgColors[index % bgColors.length]} relative h-64`}>
+              <div className={`${bgColors[index % bgColors.length]} relative h-48 sm:h-56 lg:h-64`}>
                 <Image
                   src={product.image}
                   alt={product.name}
@@ -43,14 +43,14 @@ export default function FeaturedProducts() {
                   className="object-cover"
                 />
               </div>
-              <div className="p-4">
-                <h3 className="font-semibold text-gray-800 mb-2">
+              <div className="p-3 sm:p-4">
+                <h3 className="font-semibold text-gray-800 mb-1 sm:mb-2 text-sm sm:text-base">
                   {product.name}
                 </h3>
-                <p className="text-md font-bold text-gray-500 mb-4">
+                <p className="text-sm sm:text-md font-bold text-gray-500 mb-3 sm:mb-4">
                   ${product.price}
                 </p>
-                <button className="w-full bg-green-600 cursor-pointer text-white font-medium py-2 px-4 rounded transition-colors">
+                <button className="w-full bg-green-600 cursor-pointer text-white font-medium py-2 px-4 rounded transition-colors text-sm sm:text-base">
                   Add to Cart
                 </button>
               </div>
