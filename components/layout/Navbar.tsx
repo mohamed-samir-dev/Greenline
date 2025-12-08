@@ -10,7 +10,7 @@ export default function Navbar() {
   
   if (pathname?.startsWith('/admin')) return null;
 return (
-    <nav className="bg-white border-b-2 border-green-200">
+    <nav className="bg-white relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-green-300 after:to-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
