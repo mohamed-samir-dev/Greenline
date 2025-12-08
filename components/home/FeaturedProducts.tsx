@@ -50,7 +50,7 @@ export default function FeaturedProducts() {
                 <p className="text-md font-bold text-gray-500 mb-4">
                   ${product.price}
                 </p>
-                <button className="w-full bg-green-700 hover:bg-green-800 text-white font-medium py-2 px-4 rounded transition-colors">
+                <button className="w-full bg-green-600 cursor-pointer text-white font-medium py-2 px-4 rounded transition-colors">
                   Add to Cart
                 </button>
               </div>
