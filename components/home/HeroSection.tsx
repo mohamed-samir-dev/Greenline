@@ -23,7 +23,7 @@ export default function HeroSection() {
             </p>
             <Link
               href="/shop"
-              className="inline-block bg-green-800 hover:bg-green-900 text-white font-semibold px-8 py-3 rounded transition-colors"
+              className="inline-block bg-green-600 hover:bg-green-900 text-white font-semibold px-8 py-3 rounded transition-colors"
             >
               Shop Now
             </Link>
