@@ -2,6 +2,8 @@ import HeroSection from '@/components/home/HeroSection';
 import ShopByCategory from '@/components/home/ShopByCategory';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
 import SeasonalBanner from '@/components/home/SeasonalBanner';
+import FeaturesSection from '@/components/home/FeaturesSection';
+
 
 export default function Home() {
   return (
@@ -10,6 +12,7 @@ export default function Home() {
       <ShopByCategory />
       <FeaturedProducts />
       <SeasonalBanner />
+      <FeaturesSection />
     </main>
   );
 }
