@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function SeasonalBanner() {
   return (
-    <section className="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="relative h-[300px] w-full overflow-hidden rounded-lg">
         <Image
           src="/images/tulips-banner.webp"
