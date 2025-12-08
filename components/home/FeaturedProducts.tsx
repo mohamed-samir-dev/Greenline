@@ -24,8 +24,8 @@ export default function FeaturedProducts() {
   }, []);
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div>
         <h2 className="text-2xl text-black font-bold mb-6">
           Featured Products
         </h2>
