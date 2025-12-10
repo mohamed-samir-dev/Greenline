@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { db } from "@/lib/firebase/firebaseClient";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { toast } from "sonner";
 import { Dosage } from "@/types/product";
 
@@ -30,7 +30,7 @@ export default function DosageForm({ productId }: DosageFormProps) {
       await setDoc(doc(db, "products", productId, "dosage", dosageId), formData);
       toast.success("Dosage instruction added successfully!");
       setFormData({ plantType: "", amount: "", frequency: "" });
-    } catch (error) {
+    } catch {
       toast.error("Failed to add dosage instruction");
     } finally {
       setLoading(false);
