@@ -61,7 +61,7 @@ export default function ProductsPage() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex gap-8">
           {/* Filters Sidebar */}
-          <aside className="w-72 flex-shrink-0">
+          <aside className="w-72 shrink-0">
             <div className="p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-6">Filter By</h2>
               
