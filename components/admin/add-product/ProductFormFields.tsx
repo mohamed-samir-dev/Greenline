@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { PRODUCT_CATEGORIES } from "@/constants/categories";
 import { ProductFormData } from "@/hooks/useProductForm";
+import SizePricingSection from "./SizePricingSection";
 
 interface ProductFormFieldsProps {
   formData: ProductFormData;
@@ -67,13 +68,55 @@ export default function ProductFormFields({ formData, setFormData }: ProductForm
           </label>
           <input
             type="number"
-            value={formData.stock}
-            onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+            value={formData.stockQuantity}
+            onChange={(e) => setFormData({ ...formData, stockQuantity: e.target.value })}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
             placeholder="0"
             required
           />
         </div>
+      </div>
+
+      {/* Main Image */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          Main Image URL <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="url"
+          value={formData.mainImage}
+          onChange={(e) => setFormData({ ...formData, mainImage: e.target.value })}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
+          placeholder="https://example.com/main-image.jpg"
+          required
+        />
+        {formData.mainImage && (() => {
+          try {
+            new URL(formData.mainImage);
+            return (
+              <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                <p className="text-sm text-gray-600 mb-2">Main Image Preview:</p>
+                <Image src={formData.mainImage} alt="Preview" width={128} height={128} className="object-cover rounded-lg" />
+              </div>
+            );
+          } catch {
+            return null;
+          }
+        })()}
+      </div>
+
+      {/* Additional Images */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          Additional Images (comma-separated URLs)
+        </label>
+        <textarea
+          value={formData.images}
+          onChange={(e) => setFormData({ ...formData, images: e.target.value })}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
+          rows={2}
+          placeholder="https://example.com/img1.jpg, https://example.com/img2.jpg"
+        />
       </div>
 
       {/* Description */}
@@ -85,31 +128,41 @@ export default function ProductFormFields({ formData, setFormData }: ProductForm
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
-          rows={4}
-          placeholder="Enter product description..."
+          rows={3}
+          placeholder="Enter short product description..."
           required
         />
       </div>
 
-      {/* Image URL */}
+      {/* Full Description */}
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">
-          Image URL <span className="text-red-500">*</span>
+          Full Description
+        </label>
+        <textarea
+          value={formData.fullDescription}
+          onChange={(e) => setFormData({ ...formData, fullDescription: e.target.value })}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
+          rows={6}
+          placeholder="Enter detailed product description, benefits, usage instructions, etc..."
+        />
+      </div>
+
+      {/* Size-Based Pricing */}
+      <SizePricingSection formData={formData} setFormData={setFormData} />
+
+      {/* Tags */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          Tags (comma-separated)
         </label>
         <input
-          type="url"
-          value={formData.image}
-          onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+          type="text"
+          value={formData.tags}
+          onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
-          placeholder="https://example.com/image.jpg"
-          required
+          placeholder="organic, fertilizer, indoor"
         />
-        {formData.image && (
-          <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600 mb-2">Image Preview:</p>
-            <Image src={formData.image} alt="Preview" width={128} height={128} className="object-cover rounded-lg" />
-          </div>
-        )}
       </div>
     </>
   );
