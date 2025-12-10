@@ -1,0 +1,83 @@
+{
+  "MAIN_PRODUCT_DOCUMENT": {
+    "path": "products/{productId}",
+    "fields": {
+      "name": "",
+      "price": 0,
+      "category": "",
+      "stockQuantity": 0,
+      "inStock": false,
+      "mainImage": "",
+      "images": [],
+      "description": "",
+      "tags": [],
+      "createdAt": "",
+      "updatedAt": ""
+    }
+  },
+  "SUB_COLLECTIONS": {
+    "specifications": {
+      "path": "products/{productId}/specifications/{specId}",
+      "fields": {
+        "nutrient": "",
+        "percentage": "",
+        "source": ""
+      }
+    },
+    "usageGuide": {
+      "path": "products/{productId}/usageGuide/{stepId}",
+      "fields": {
+        "stepNumber": 0,
+        "title": "",
+        "description": ""
+      }
+    },
+    "dosage": {
+      "path": "products/{productId}/dosage/{dosageId}",
+      "fields": {
+        "plantType": "",
+        "amount": "",
+        "frequency": ""
+      }
+    },
+    "safety": {
+      "path": "products/{productId}/safety/{safetyId}",
+      "fields": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "visualGuide": {
+      "path": "products/{productId}/visualGuide/{visualId}",
+      "fields": {
+        "image": "",
+        "caption": ""
+      }
+    },
+    "reviews": {
+      "path": "products/{productId}/reviews/{reviewId}",
+      "fields": {
+        "userName": "",
+        "userImage": "",
+        "rating": 0,
+        "reviewText": "",
+        "date": "",
+        "verifiedPurchase": false
+      }
+    }
+  },
+  "RATING_SUMMARY_DOCUMENT": {
+    "path": "products/{productId}/ratingSummary",
+    "fields": {
+      "averageRating": 0,
+      "totalReviews": 0,
+      "ratingBreakdown": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      }
+    }
+  }
+}
