@@ -44,5 +44,5 @@ export const useProducts = () => {
     );
   };
 
-  return { loading, products, handleDelete };
+  return { loading, products, handleDelete, refetch: loadProducts };
 };
