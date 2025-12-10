@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { db } from "@/lib/firebase/firebaseClient";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { toast } from "sonner";
 import { Specification } from "@/types/product";
 
@@ -31,7 +31,7 @@ export default function SpecificationForm({ productId }: SpecificationFormProps)
       await setDoc(doc(db, "products", productId, "specifications", specId), formData);
       toast.success("Specification added successfully!");
       setFormData({ nutrient: "", percentage: "", source: "" });
-    } catch (error) {
+    } catch {
       toast.error("Failed to add specification");
     } finally {
       setLoading(false);
