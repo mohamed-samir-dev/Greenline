@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { db } from "@/lib/firebase/firebaseClient";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { toast } from "sonner";
 import { VisualGuide } from "@/types/product";
 
@@ -29,7 +29,7 @@ export default function VisualGuideForm({ productId }: VisualGuideFormProps) {
       await setDoc(doc(db, "products", productId, "visualGuide", visualId), formData);
       toast.success("Visual guide image added successfully!");
       setFormData({ image: "", caption: "" });
-    } catch (error) {
+    } catch {
       toast.error("Failed to add visual guide image");
     } finally {
       setLoading(false);
