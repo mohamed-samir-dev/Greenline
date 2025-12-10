@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { db } from '@/lib/firebase/firebaseClient';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, getDocs, query, limit } from 'firebase/firestore';
 import { Product } from '@/types/product';
 
 const bgColors = ['bg-teal-600', 'bg-red-600', 'bg-green-600', 'bg-amber-700'];
@@ -12,7 +12,7 @@ export default function FeaturedProducts() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const q = query(collection(db, 'products'));
+      const q = query(collection(db, 'products'), limit(4));
       const querySnapshot = await getDocs(q);
       const productsData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -36,12 +36,14 @@ export default function FeaturedProducts() {
               className="bg-green-50 rounded-2xl overflow-hidden shadow-sm"
             >
               <div className={`${bgColors[index % bgColors.length]} relative h-48 sm:h-56 lg:h-64`}>
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                />
+                {product.mainImage && (
+                  <Image
+                    src={product.mainImage}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                  />
+                )}
               </div>
               <div className="p-3 sm:p-4">
                 <h3 className="font-semibold text-gray-800 mb-1 sm:mb-2 text-sm sm:text-base">
