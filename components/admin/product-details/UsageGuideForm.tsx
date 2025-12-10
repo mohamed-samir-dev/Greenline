@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { db } from "@/lib/firebase/firebaseClient";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { toast } from "sonner";
 import { UsageGuide } from "@/types/product";
 
@@ -29,7 +29,7 @@ export default function UsageGuideForm({ productId }: UsageGuideFormProps) {
       await setDoc(doc(db, "products", productId, "usageGuide", usageId), formData);
       toast.success("Usage guide step added successfully!");
       setFormData({ stepNumber: 1, title: "", description: "" });
-    } catch (error) {
+    } catch {
       toast.error("Failed to add usage guide step");
     } finally {
       setLoading(false);
