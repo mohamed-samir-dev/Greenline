@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { db } from "@/lib/firebase/firebaseClient";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { toast } from "sonner";
 import { Safety } from "@/types/product";
 
@@ -29,7 +29,7 @@ export default function SafetyForm({ productId }: SafetyFormProps) {
       await setDoc(doc(db, "products", productId, "safety", safetyId), formData);
       toast.success("Safety instruction added successfully!");
       setFormData({ title: "", description: "" });
-    } catch (error) {
+    } catch {
       toast.error("Failed to add safety instruction");
     } finally {
       setLoading(false);
