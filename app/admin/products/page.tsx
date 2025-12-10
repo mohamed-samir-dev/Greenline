@@ -17,7 +17,7 @@ export default function AdminProducts() {
       await reorganizeSequentialIds();
       toast.success("Product IDs reorganized successfully!");
       refetch();
-    } catch (error) {
+    } catch {
       toast.error("Failed to reorganize product IDs");
     }
     setReorganizing(false);
