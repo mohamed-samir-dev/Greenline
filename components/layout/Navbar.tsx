@@ -2,14 +2,17 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, User, ShoppingCart, Menu, X } from 'lucide-react';
+import { Search, User, Menu, X } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import CartIcon from '@/components/cart/CartIcon';
+import MiniCart from '@/components/cart/MiniCart';
 
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMiniCartOpen, setIsMiniCartOpen] = useState(false);
   
   // Prefetch products page on mount
   useEffect(() => {
@@ -45,9 +48,18 @@ export default function Navbar() {
             <button className="p-2 bg-green-200 rounded hover:bg-green-100">
               <User className="h-5 w-5 text-gray-700" />
             </button>
-            <Link href="/cart" className="p-2 bg-green-200 rounded hover:bg-green-100">
-              <ShoppingCart className="h-5 w-5 text-gray-700" />
-            </Link>
+            <div className="relative">
+              <button 
+                onClick={() => setIsMiniCartOpen(!isMiniCartOpen)}
+                className="p-2 bg-green-200 rounded hover:bg-green-100"
+              >
+                <CartIcon />
+              </button>
+              <MiniCart 
+                isOpen={isMiniCartOpen} 
+                onClose={() => setIsMiniCartOpen(false)} 
+              />
+            </div>
           </div>
         </div>
 
@@ -65,9 +77,7 @@ export default function Navbar() {
               >
                 {isMenuOpen ? <X className="h-5 w-5 text-gray-700" /> : <Menu className="h-5 w-5 text-gray-700" />}
               </button>
-              <Link href="/cart" className="p-2 bg-green-200 rounded hover:bg-green-100">
-                <ShoppingCart className="h-5 w-5 text-gray-700" />
-              </Link>
+              <CartIcon className="p-2 bg-green-200 rounded hover:bg-green-100" />
             </div>
           </div>
           <div className="pb-4">
