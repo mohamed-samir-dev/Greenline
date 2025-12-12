@@ -6,7 +6,7 @@ export const SizeHeader = ({ onAddSize }: SizeHeaderProps) => {
   return (
     <div className="flex items-center justify-between mb-4">
       <label className="block text-sm font-semibold text-gray-700">
-        Size-Based Pricing
+        Size-Based Pricing <span className="text-red-500">*</span>
       </label>
       <button
         type="button"
