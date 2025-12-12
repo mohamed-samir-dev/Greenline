@@ -9,6 +9,7 @@ import {
   ProductInfo,
   ProductTabs
 } from "@/components/products/product-detail";
+import ProductDetailSkeleton from "@/components/ui/ProductDetailSkeleton";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -28,11 +29,7 @@ export default function ProductDetailPage() {
   } = useProductData(productId);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        Loading...
-      </div>
-    );
+    return <ProductDetailSkeleton />;
   }
   
   if (!product) {
