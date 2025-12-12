@@ -47,6 +47,18 @@ export const useProductForm = () => {
     loadNextId();
   }, []);
 
+  const setFormDataWithStockCalc = (data: ProductFormData) => {
+    const totalStock = data.sizes.reduce((total, size) => {
+      const stock = parseInt(size.stockQuantity) || 0;
+      return total + stock;
+    }, 0);
+    
+    // Set price from first size if available
+    const firstSizePrice = data.sizes.length > 0 && data.sizes[0].price ? data.sizes[0].price : data.price;
+    
+    setFormData({ ...data, stockQuantity: totalStock.toString(), price: firstSizePrice });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setUploading(true);
@@ -74,10 +86,13 @@ export const useProductForm = () => {
           stockQuantity: parseInt(size.stockQuantity)
         }));
       
+      // Use first size price as base price
+      const basePrice = sizes.length > 0 ? sizes[0].price : parseFloat(formData.price) || 0;
+      
       const productData = {
         sequentialId: sequentialId,
         name: formData.name,
-        price: parseFloat(formData.price) || 0,
+        price: basePrice,
         category: formData.category,
         stockQuantity: stockQty,
         inStock: stockQty > 0,
@@ -123,5 +138,5 @@ export const useProductForm = () => {
     });
   };
 
-  return { formData, setFormData, uploading, handleSubmit, clearForm };
+  return { formData, setFormData: setFormDataWithStockCalc, uploading, handleSubmit, clearForm };
 };
