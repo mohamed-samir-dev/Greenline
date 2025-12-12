@@ -2,12 +2,14 @@
 
 import { useProductsData } from '@/hooks/useProductsData';
 import { useProductFilters } from '@/hooks/useProductFilters';
+import { usePagination } from '@/hooks/usePagination';
 import {
   ProductFilters,
   ProductGrid,
   ProductHeader,
   ProductPagination
 } from '@/components/products/products-list';
+import ProductsSkeleton from '@/components/ui/ProductsSkeleton';
 
 export default function ProductsPage() {
   const { products, loading } = useProductsData();
@@ -26,11 +28,23 @@ export default function ProductsPage() {
     handleReset
   } = useProductFilters(products);
 
+  const {
+    currentPage,
+    totalPages,
+    paginatedItems,
+    goToPage,
+    nextPage,
+    prevPage,
+    hasNextPage,
+    hasPrevPage,
+    showPagination
+  } = usePagination({ items: filteredProducts, itemsPerPage: 9 });
+
   const handleApply = () => {
     // Filters are already applied in real-time
   };
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  if (loading) return <ProductsSkeleton />;
 
   return (
     <div className="min-h-screen bg-white">
@@ -54,8 +68,17 @@ export default function ProductsPage() {
               sortBy={sortBy}
               onSortChange={setSortBy}
             />
-            <ProductGrid products={filteredProducts} />
-            <ProductPagination />
+            <ProductGrid products={paginatedItems} />
+            <ProductPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={goToPage}
+              onPrevPage={prevPage}
+              onNextPage={nextPage}
+              hasPrevPage={hasPrevPage}
+              hasNextPage={hasNextPage}
+              showPagination={showPagination}
+            />
           </main>
         </div>
       </div>
