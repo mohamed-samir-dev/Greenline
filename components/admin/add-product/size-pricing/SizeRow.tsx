@@ -16,6 +16,7 @@ export const SizeRow = ({ size, index, onUpdate, onRemove, canRemove }: SizeRowP
           onChange={(e) => onUpdate(index, 'size', e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded text-gray-900"
           placeholder="e.g., 1kg"
+          required
         />
       </div>
       <div>
@@ -26,6 +27,7 @@ export const SizeRow = ({ size, index, onUpdate, onRemove, canRemove }: SizeRowP
           onChange={(e) => onUpdate(index, 'price', e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded text-gray-900"
           placeholder="Price"
+          required
         />
       </div>
       <div>
@@ -35,6 +37,7 @@ export const SizeRow = ({ size, index, onUpdate, onRemove, canRemove }: SizeRowP
           onChange={(e) => onUpdate(index, 'stockQuantity', e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded text-gray-900"
           placeholder="Stock"
+          required
         />
       </div>
       <div>
