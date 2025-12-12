@@ -9,10 +9,12 @@ export const useSizePricing = (formData: ProductFormData, setFormData: (data: Pr
   };
 
   const removeSize = (index: number) => {
-    setFormData({
-      ...formData,
-      sizes: formData.sizes.filter((_, i) => i !== index)
-    });
+    if (formData.sizes.length > 1) {
+      setFormData({
+        ...formData,
+        sizes: formData.sizes.filter((_, i) => i !== index)
+      });
+    }
   };
 
   const updateSize = (index: number, field: string, value: string) => {
