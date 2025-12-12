@@ -22,7 +22,7 @@ export default function HeroSection() {
               Premium organic fertilizer enriched with natural nutrients for healthier plants and vibrant growth
             </p>
             <Link
-              href="/shop"
+              href="/products" prefetch={true}
               className="inline-block bg-green-600 hover:bg-green-900 text-white font-semibold px-6 py-2 sm:px-7 sm:py-2.5 lg:px-8 lg:py-3 rounded transition-colors text-sm sm:text-base"
             >
               Shop Now
