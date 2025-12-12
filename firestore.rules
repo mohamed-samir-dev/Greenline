@@ -1,33 +1,8 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow public read access to products and all subcollections
-    match /products/{productId} {
-      allow read: if true;
-      
-      // Allow read access to all subcollections under products
-      match /{subcollection=**} {
-        allow read: if true;
-      }
-      
-      // Allow public write access to reviews subcollection only
-      match /reviews/{reviewId} {
-        allow create: if true;
-      }
-    }
-    
-    // Allow read access to categories if you have them
-    match /categories/{categoryId} {
-      allow read: if true;
-    }
-    
-    // Restrict write access - only authenticated admin users can write (except reviews)
-    match /products/{productId} {
-      allow write: if request.auth != null && request.auth.token.admin == true;
-      
-      match /{subcollection}/{docId} {
-        allow write: if subcollection != 'reviews' && request.auth != null && request.auth.token.admin == true;
-      }
+    match /{document=**} {
+      allow read, write: if true;
     }
   }
 }
