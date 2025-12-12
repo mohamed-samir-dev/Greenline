@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Product } from "@/types/product";
-import { FaHeart, FaShoppingBasket, FaCertificate, FaShieldAlt } from "react-icons/fa";
+import { FaHeart, FaCertificate, FaShieldAlt } from "react-icons/fa";
+import AddToCartButton from "@/components/cart/AddToCartButton";
+import RealTimeStockDisplay from "@/components/products/RealTimeStockDisplay";
 
 interface ProductInfoProps {
   product: Product;
@@ -26,18 +28,11 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       <p className="text-4xl text-green-600 font-bold mb-3">
         ${selectedPrice}
       </p>
-      <div className="flex items-center gap-2 mb-6">
-        <div className={`w-2 h-2 rounded-full ${
-          selectedStock > 10 ? 'bg-green-500' : 
-          selectedStock > 0 ? 'bg-yellow-500' : 'bg-red-500'
-        }`}></div>
-        <span className="text-sm font-medium text-gray-700">
-          {selectedStock > 0 
-            ? `${selectedStock} units in stock` 
-            : 'Out of stock'
-          }
-        </span>
-      </div>
+      <RealTimeStockDisplay 
+        productId={product.id} 
+        selectedSize={selectedSizeData}
+        className="mb-6 text-sm font-medium" 
+      />
 
       {/* Size Options */}
       {product.sizes && product.sizes.length > 0 && (
@@ -63,40 +58,14 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         </div>
       )}
 
-      {/* Quantity, Heart, and Add to Cart */}
+      {/* Add to Cart and Wishlist */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Quantity
-        </label>
         <div className="flex items-center gap-3">
-          <div className="flex items-center border border-gray-300 text-black rounded-lg">
-            <button
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="px-4 py-2 hover:bg-gray-50"
-            >
-              -
-            </button>
-            <span className="px-6 py-2 border-x border-gray-300">
-              {quantity}
-            </span>
-            <button
-              onClick={() => setQuantity(quantity + 1)}
-              className="px-4 py-2 hover:bg-gray-50"
-            >
-              +
-            </button>
-          </div>
-          <button 
-            disabled={selectedStock === 0}
-            className={`flex-1 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 ${
-              selectedStock > 0 
-                ? 'bg-green-400 text-white hover:bg-green-700' 
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            }`}
-          >
-            <FaShoppingBasket className="w-5 h-5" />
-            {selectedStock > 0 ? 'Add to Cart' : 'Out of Stock'}
-          </button>
+          <AddToCartButton 
+            product={product} 
+            selectedSize={selectedSizeData}
+            className="flex-1"
+          />
           <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-red-500 transition-colors">
             <FaHeart className="w-5 h-5" />
           </button>
