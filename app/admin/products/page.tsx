@@ -47,7 +47,7 @@ export default function AdminProducts() {
             {reorganizing ? "Reorganizing..." : "Reorganize IDs"}
           </button>
         </div>
-        <ProductsTable products={products} onDelete={handleDelete} />
+        <ProductsTable products={products} onDelete={handleDelete} onUpdate={refetch} />
       </div>
     </div>
   );
