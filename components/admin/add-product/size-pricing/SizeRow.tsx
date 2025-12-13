@@ -14,6 +14,12 @@ export const SizeRow = ({ size, index, onUpdate, onRemove, canRemove }: SizeRowP
           type="text"
           value={size.size}
           onChange={(e) => onUpdate(index, 'size', e.target.value)}
+          onBlur={(e) => {
+            let value = e.target.value.trim();
+            if (value && !value.toLowerCase().endsWith('kg')) {
+              onUpdate(index, 'size', value + 'kg');
+            }
+          }}
           className="w-full px-3 py-2 border border-gray-300 rounded text-gray-900"
           placeholder="e.g., 1kg"
           required
