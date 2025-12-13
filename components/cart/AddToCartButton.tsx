@@ -3,7 +3,6 @@
 import { useCartStore } from '@/stores/cartStore';
 import { Product, ProductSize } from '@/types/product';
 import { ShoppingCart } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useRealTimeStock } from '@/hooks/useRealTimeStock';
 
@@ -16,14 +15,13 @@ interface AddToCartButtonProps {
 
 export default function AddToCartButton({ product, selectedSize, className = "", icon }: AddToCartButtonProps) {
   const addItem = useCartStore((state) => state.addItem);
-  const router = useRouter();
   const { product: liveProduct } = useRealTimeStock(product.id);
   
   const currentProduct = liveProduct || product;
 
   const handleAddToCart = async () => {
     // Auto-select first size if no size selected but product has sizes
-    const autoSelectedSize = !selectedSize && currentProduct.sizes?.length > 0 
+    const autoSelectedSize = !selectedSize && currentProduct.sizes && currentProduct.sizes.length > 0 
       ? currentProduct.sizes[0] 
       : selectedSize;
     
@@ -53,7 +51,7 @@ export default function AddToCartButton({ product, selectedSize, className = "",
     }
   };
 
-  const autoSelectedSize = !selectedSize && currentProduct.sizes?.length > 0 
+  const autoSelectedSize = !selectedSize && currentProduct.sizes && currentProduct.sizes.length > 0 
     ? currentProduct.sizes[0] 
     : selectedSize;
   const liveSize = autoSelectedSize && currentProduct.sizes?.find(s => s.size === autoSelectedSize.size);
