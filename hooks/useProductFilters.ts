@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Product } from '@/types/product';
 
-export const useProductFilters = (products: Product[]) => {
+export const useProductFilters = (products: Product[], searchQuery?: string) => {
   const [priceRange, setPriceRange] = useState([0, 100]);
   const [selectedCrop, setSelectedCrop] = useState('All Crops');
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -19,14 +19,16 @@ export const useProductFilters = (products: Product[]) => {
       const matchesCrop = selectedCrop === 'All Crops' || p.category === selectedCrop;
       const matchesType = selectedTypes.length === 0 || selectedTypes.some(t => p.name.toLowerCase().includes(t.toLowerCase()));
       const matchesPrice = p.price >= priceRange[0] && p.price <= priceRange[1];
-      return matchesCrop && matchesType && matchesPrice;
+      const matchesSearch = !searchQuery || 
+        p.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCrop && matchesType && matchesPrice && matchesSearch;
     }).sort((a, b) => {
       if (sortBy === 'price-low') return a.price - b.price;
       if (sortBy === 'price-high') return b.price - a.price;
       if (sortBy === 'name') return a.name.localeCompare(b.name);
       return 0;
     });
-  }, [products, selectedCrop, selectedTypes, priceRange, sortBy]);
+  }, [products, selectedCrop, selectedTypes, priceRange, sortBy, searchQuery]);
 
   const handleReset = () => {
     setPriceRange([0, 100]);
