@@ -10,9 +10,11 @@ import {
   ProductPagination
 } from '@/components/products/products-list';
 import ProductsSkeleton from '@/components/ui/ProductsSkeleton';
+import { useSearch } from '@/contexts';
 
 export default function ProductsPage() {
   const { products, loading } = useProductsData();
+  const { searchQuery } = useSearch();
   const {
     priceRange,
     setPriceRange,
@@ -26,7 +28,7 @@ export default function ProductsPage() {
     types,
     filteredProducts,
     handleReset
-  } = useProductFilters(products);
+  } = useProductFilters(products, searchQuery);
 
   const {
     currentPage,
@@ -49,6 +51,16 @@ export default function ProductsPage() {
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {searchQuery && (
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">
+              Search results for &ldquo;{searchQuery}&rdquo;
+            </h2>
+            <p className="text-gray-600 mt-1">
+              {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
+            </p>
+          </div>
+        )}
         <div className="flex gap-8">
           <ProductFilters
             types={types}
