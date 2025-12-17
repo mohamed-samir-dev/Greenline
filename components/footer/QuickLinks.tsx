@@ -1,0 +1,27 @@
+import Link from 'next/link';
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/products', label: 'Products' },
+  { href: '/about', label: 'About Us' },
+  { href: '/contact', label: 'Contact' },
+  { href: '#', label: 'Blog' }
+];
+
+export default function QuickLinks() {
+  return (
+    <div>
+      <h4 className="text-lg font-semibold text-white mb-6">Quick Links</h4>
+      <ul className="space-y-3">
+        {links.map((link, index) => (
+          <li key={index}>
+            <Link href={link.href} className="text-gray-300 hover:text-green-400 transition-colors flex items-center group">
+              <span className="w-1.5 h-1.5 bg-green-400 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
