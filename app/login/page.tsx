@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { loginUser } from '@/lib/firebase/auth';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@/contexts/UserContext';
 import Link from 'next/link';
 import { Mail, LogIn } from 'lucide-react';
 import AuthLayout from '@/components/auth/AuthLayout';
@@ -22,6 +23,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useUser();
   
   const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema)
@@ -29,22 +31,17 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      await loginUser(data.email, data.password);
+      const result = await loginUser(data.email, data.password);
+      login(result.user);
       router.push('/');
     } catch (error: unknown) {
-      const err = error as { code?: string; message?: string };
-      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
-        setError('root', { message: 'Invalid email or password' });
-      } else if (err.code === 'auth/invalid-credential') {
-        setError('root', { message: 'Invalid credentials' });
-      } else {
-        setError('root', { message: err.message || 'An error occurred' });
-      }
+      const err = error as { message?: string };
+      setError('root', { message: err.message || 'Login failed' });
     }
   };
 
   return (
-    <AuthLayout title="Welcome Back" subtitle="Access your professional account">
+    <AuthLayout title="Welcome Back" subtitle="Access your account">
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <AuthInput
           id="email"
