@@ -11,7 +11,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const { averageRating, totalReviews } = useProductReviews(product.id);
+  const { averageRating } = useProductReviews(product.id);
   const hasDiscount = product.sizes && product.sizes.length > 0;
   const lowestPrice = hasDiscount ? Math.min(...product.sizes!.map(s => s.price)) : product.price;
   const isOnSale = hasDiscount && lowestPrice < product.price;
@@ -104,7 +104,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             product={product}
             className="flex-1 py-2 sm:py-3 px-3 sm:px-4 text-xs sm:text-sm font-semibold"
           />
-          <Link href={`/products/${product.id}`} className="flex-shrink-0">
+          <Link href={`/products/${product.id}`} className="shrink-0">
             <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 p-2 sm:p-3 rounded-lg transition-colors">
               <Eye className="h-4 w-4" />
             </button>
