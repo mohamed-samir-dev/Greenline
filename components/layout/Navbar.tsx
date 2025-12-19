@@ -5,8 +5,8 @@ import Image from 'next/image';
 import { Menu, X, UserPlus, LogOut } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, logoutUser } from '@/lib/firebase/auth';
+import { useUser } from '@/contexts/UserContext';
+import { logoutUser } from '@/lib/firebase/auth';
 import CartIcon from '@/components/cart/CartIcon';
 import MiniCart from '@/components/cart/MiniCart';
 import UserProfileCircle from './UserProfileCircle';
@@ -15,12 +15,15 @@ import UserProfileCircle from './UserProfileCircle';
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const [user] = useAuthState(auth);
+  const { user, logout } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMiniCartOpen, setIsMiniCartOpen] = useState(false);
 
   const handleLogout = async () => {
-    await logoutUser();
+    if (user?.id) {
+      await logoutUser(user.id);
+    }
+    logout();
     router.push('/');
   };
   // Prefetch products page on mount
