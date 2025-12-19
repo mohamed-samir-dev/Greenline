@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { loginUser } from "@/lib/firebase/auth";
+import { loginAdmin } from "@/lib/firebase/auth";
 
 export const useLogin = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ export const useLogin = () => {
     setLoading(true);
 
     try {
-      await loginUser(email, password);
+      await loginAdmin(email, password);
       router.push("/admin/products");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
