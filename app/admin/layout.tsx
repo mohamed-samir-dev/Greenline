@@ -1,6 +1,7 @@
 "use client";
 
 import { useAdminAuth } from "@/hooks/useAdminAuth";
+import AdminSidebar from "@/components/admin/AdminSidebar";
 
 export default function AdminLayout({
   children,
@@ -17,5 +18,12 @@ export default function AdminLayout({
     );
   }
 
-  return <>{children}</>;
+  return (
+    <div className="flex">
+      <AdminSidebar />
+      <main className="flex-1">
+        {children}
+      </main>
+    </div>
+  );
 }
