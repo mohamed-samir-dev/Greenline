@@ -40,15 +40,15 @@ export const ProductTabs = ({
   ];
 
   return (
-    <section className="mb-12">
+    <section className="mb-8 lg:mb-12">
       {/* Tab Navigation */}
-      <div className="border-b border-gray-200 mb-6">
-        <div className="flex space-x-8">
+      <div className="border-b border-gray-200 mb-4 sm:mb-6 overflow-x-auto">
+        <div className="flex space-x-4 sm:space-x-8 min-w-max">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`pb-4 text-sm font-medium ${
+              className={`pb-3 sm:pb-4 text-xs sm:text-sm font-medium whitespace-nowrap ${
                 activeTab === tab.id
                   ? "text-green-600 border-b-2 border-green-600"
                   : "text-gray-500 hover:text-gray-700"
@@ -63,7 +63,7 @@ export const ProductTabs = ({
       {/* Tab Content */}
       <div className="min-h-[300px]">
         {activeTab === "description" && (
-          <div className="text-gray-700">
+          <div className="text-gray-700 text-sm sm:text-base">
             {product.fullDescription ? (
               <p className="whitespace-pre-line leading-relaxed">
                 {product.fullDescription}
