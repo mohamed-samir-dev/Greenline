@@ -2,18 +2,27 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, User, Menu, X } from 'lucide-react';
+import { Menu, X, UserPlus, LogOut } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, logoutUser } from '@/lib/firebase/auth';
 import CartIcon from '@/components/cart/CartIcon';
 import MiniCart from '@/components/cart/MiniCart';
+import UserProfileCircle from './UserProfileCircle';
 
 
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
+  const [user] = useAuthState(auth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMiniCartOpen, setIsMiniCartOpen] = useState(false);
+
+  const handleLogout = async () => {
+    await logoutUser();
+    router.push('/');
+  };
   // Prefetch products page on mount
   useEffect(() => {
     router.prefetch('/products');
@@ -37,10 +46,17 @@ export default function Navbar() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-
-            <button className="p-2 bg-green-200 rounded hover:bg-green-100">
-              <User className="h-5 w-5 text-gray-700" />
-            </button>
+            {user && <UserProfileCircle user={user} />}
+            {!user && (
+              <Link href="/register" className="p-2 bg-green-200 rounded hover:bg-green-100">
+                <UserPlus className="h-5 w-5 text-gray-700" />
+              </Link>
+            )}
+            {user && (
+              <button onClick={handleLogout} className="p-2 bg-green-200 rounded hover:bg-green-100">
+                <LogOut className="h-5 w-5 text-gray-700" />
+              </button>
+            )}
             <div className="relative">
               <button 
                 onClick={() => setIsMiniCartOpen(!isMiniCartOpen)}
@@ -86,7 +102,18 @@ export default function Navbar() {
               <Link href="/products" prefetch={true} className="text-base text-black font-semibold hover:text-green-600 py-2" onClick={() => setIsMenuOpen(false)}>Products</Link>
               <Link href="/about" className="text-base text-black font-semibold hover:text-green-600 py-2" onClick={() => setIsMenuOpen(false)}>About Us</Link>
               <Link href="/contact" className="text-base text-black font-semibold hover:text-green-600 py-2" onClick={() => setIsMenuOpen(false)}>Contact</Link>
-              <Link href="/account" className="text-base text-black font-semibold hover:text-green-600 py-2 border-t border-green-100 pt-4" onClick={() => setIsMenuOpen(false)}>My Account</Link>
+              <div className="border-t border-green-100 pt-4 flex items-center gap-3">
+                {user && <UserProfileCircle user={user} size="sm" />}
+                {!user ? (
+                  <Link href="/register" className="flex items-center gap-2 text-base text-black font-semibold hover:text-green-600 py-2" onClick={() => setIsMenuOpen(false)}>
+                    <UserPlus className="h-5 w-5" /> Login
+                  </Link>
+                ) : (
+                  <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="flex items-center gap-2 text-base text-black font-semibold hover:text-green-600 py-2">
+                    <LogOut className="h-5 w-5" /> Logout
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
