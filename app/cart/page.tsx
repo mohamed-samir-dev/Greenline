@@ -34,16 +34,16 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-green-50 via-white to-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         <CartHeader itemCount={items.length} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Cart Items */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             <TrustBadges />
 
             {/* Cart Items List */}
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {items.map((item) => (
                 <CartItem
                   key={`${item.id}-${item.size || 'default'}`}
@@ -64,7 +64,7 @@ export default function CartPage() {
                     console.error('Failed to clear cart:', error);
                   }
                 }}
-                className="text-red-600 hover:text-red-700 font-medium px-4 py-2 rounded-lg hover:bg-red-50 transition-colors"
+                className="text-red-600 hover:text-red-700 font-medium px-4 py-2 rounded-lg hover:bg-red-50 transition-colors text-sm sm:text-base"
               >
                 Clear All Items
               </button>
