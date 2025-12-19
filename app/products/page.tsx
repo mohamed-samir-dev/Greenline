@@ -50,10 +50,10 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         {searchQuery && (
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
               Search results for &ldquo;{searchQuery}&rdquo;
             </h2>
             <p className="text-gray-600 mt-1">
@@ -61,7 +61,7 @@ export default function ProductsPage() {
             </p>
           </div>
         )}
-        <div className="flex gap-8">
+        <div className="lg:flex lg:gap-8">
           <ProductFilters
             types={types}
             selectedTypes={selectedTypes}
@@ -75,7 +75,7 @@ export default function ProductsPage() {
             onReset={handleReset}
           />
 
-          <main className="flex-1">
+          <main className="flex-1 lg:mt-0 mt-6">
             <ProductHeader
               sortBy={sortBy}
               onSortChange={setSortBy}
