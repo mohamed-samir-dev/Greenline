@@ -42,9 +42,9 @@ export default function ProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Breadcrumb */}
-        <div className="text-sm mb-6">
+        <div className="text-sm mb-4 sm:mb-6">
           <Link href="/" className="text-green-600 hover:text-green-700">
             Home
           </Link>
@@ -59,7 +59,7 @@ export default function ProductDetailPage() {
           <span className="text-gray-900">{product.name}</span>
         </div>
 
-        <div className="grid grid-cols-2 gap-12 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 mb-8 lg:mb-12">
           {/* Left: Image Gallery */}
           <ProductImageGallery
             mainImage={product.mainImage}
