@@ -17,11 +17,11 @@ interface CartItemProps {
 
 export default function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300">
-      <div className="p-6">
-        <div className="flex gap-6">
+    <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300">
+      <div className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
           {/* Product Image */}
-          <div className="relative w-32 h-32 shrink-0 bg-linear-to-br from-green-50 to-gray-50 rounded-xl overflow-hidden">
+          <div className="relative w-full h-48 sm:w-32 sm:h-32 shrink-0 bg-linear-to-br from-green-50 to-gray-50 rounded-lg sm:rounded-xl overflow-hidden">
             <Image
               src={item.image}
               alt={item.name}
@@ -38,18 +38,18 @@ export default function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartI
           {/* Product Details */}
           <div className="flex-1 min-w-0">
             <div className="flex justify-between items-start mb-3">
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-1">{item.name}</h3>
+              <div className="flex-1 min-w-0 pr-2">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 line-clamp-2">{item.name}</h3>
                 <div className="flex items-center gap-2 mb-2">
                   <div className="flex items-center">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <Star key={i} className="h-3 w-3 sm:h-4 sm:w-4 fill-yellow-400 text-yellow-400" />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-500">(4.8)</span>
+                  <span className="text-xs sm:text-sm text-gray-500">(4.8)</span>
                 </div>
                 {item.size && (
-                  <div className="inline-flex items-center bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="inline-flex items-center bg-gray-100 text-gray-700 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
                     Size: {item.size}
                   </div>
                 )}
@@ -62,19 +62,19 @@ export default function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartI
                     console.error('Failed to remove item:', error);
                   }
                 }}
-                className="text-gray-400 hover:text-red-500 transition-colors p-2 hover:bg-red-50 rounded-full"
+                className="text-gray-400 hover:text-red-500 transition-colors p-2 hover:bg-red-50 rounded-full flex-shrink-0"
               >
-                <Trash2 className="h-5 w-5" />
+                <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
             </div>
 
             {/* Stock Status */}
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
               <div className={`w-2 h-2 rounded-full ${
                 item.stockQuantity > 10 ? 'bg-green-500' : 
                 item.stockQuantity > 0 ? 'bg-yellow-500' : 'bg-red-500'
               }`}></div>
-              <span className="text-sm text-gray-600">
+              <span className="text-xs sm:text-sm text-gray-600">
                 {item.stockQuantity > 10 ? 'In Stock' : 
                  item.stockQuantity > 0 ? `Only ${item.stockQuantity} left` : 'Out of Stock'
                 }
@@ -82,9 +82,9 @@ export default function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartI
             </div>
 
             {/* Price and Quantity */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center bg-gray-50 rounded-xl border border-gray-200">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="flex items-center bg-gray-50 rounded-lg sm:rounded-xl border border-gray-200">
                   <button
                     onClick={async () => {
                       try {
@@ -93,11 +93,11 @@ export default function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartI
                         console.error('Failed to update quantity:', error);
                       }
                     }}
-                    className="p-3 hover:bg-gray-100 transition-colors rounded-l-xl"
+                    className="p-2 sm:p-3 hover:bg-gray-100 transition-colors rounded-l-lg sm:rounded-l-xl"
                   >
-                    <Minus className="h-4 w-4 text-gray-600" />
+                    <Minus className="h-3 w-3 sm:h-4 sm:w-4 text-gray-600" />
                   </button>
-                  <span className="px-4 py-3 font-semibold text-gray-900 min-w-12 text-center">
+                  <span className="px-3 sm:px-4 py-2 sm:py-3 font-semibold text-gray-900 min-w-8 sm:min-w-12 text-center text-sm sm:text-base">
                     {item.quantity}
                   </span>
                   <button
@@ -108,22 +108,22 @@ export default function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartI
                         console.error('Failed to update quantity:', error);
                       }
                     }}
-                    className="p-3 hover:bg-gray-100 transition-colors rounded-r-xl"
+                    className="p-2 sm:p-3 hover:bg-gray-100 transition-colors rounded-r-lg sm:rounded-r-xl"
                     disabled={item.quantity >= item.stockQuantity}
                   >
-                    <Plus className="h-4 w-4 text-gray-600" />
+                    <Plus className="h-3 w-3 sm:h-4 sm:w-4 text-gray-600" />
                   </button>
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-xs sm:text-sm text-gray-500">
                   ${item.price.toFixed(2)} each
                 </div>
               </div>
               
-              <div className="text-right">
-                <div className="text-2xl font-bold text-gray-900">
+              <div className="text-left sm:text-right">
+                <div className="text-xl sm:text-2xl font-bold text-gray-900">
                   ${(item.price * item.quantity).toFixed(2)}
                 </div>
-                <div className="text-sm text-green-600 font-medium">
+                <div className="text-xs sm:text-sm text-green-600 font-medium">
                   Save ${(item.quantity * 2.5).toFixed(2)}
                 </div>
               </div>
