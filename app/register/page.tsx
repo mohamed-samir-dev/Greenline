@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { registerUser } from '@/lib/firebase/auth';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@/contexts/UserContext';
 import Link from 'next/link';
 import { Mail, User } from 'lucide-react';
 import AuthLayout from '@/components/auth/AuthLayout';
@@ -18,7 +19,8 @@ import PasswordStrength from '@/components/auth/PasswordStrength';
 const registerSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
-  confirmPassword: z.string()
+  confirmPassword: z.string(),
+  adminPassword: z.string().optional()
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords do not match",
   path: ["confirmPassword"]
@@ -29,6 +31,7 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 export default function RegisterPage() {
   const [passwordStrength, setPasswordStrength] = useState(0);
   const router = useRouter();
+  const { login } = useUser();
   
   const { register, handleSubmit, getValues, formState: { errors, isSubmitting }, setError } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema)
@@ -51,7 +54,8 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      await registerUser(data.email, data.password);
+      const result = await registerUser(data.email, data.password, data.adminPassword);
+      login(result.user);
       router.push('/');
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
@@ -90,6 +94,19 @@ export default function RegisterPage() {
           error={errors.confirmPassword?.message}
           register={register('confirmPassword')}
         />
+
+        <div className="border-t border-gray-200 pt-4">
+          <PasswordInput
+            id="adminPassword"
+            label="Admin Password (Optional)"
+            placeholder="Enter admin password to register as admin"
+            error={errors.adminPassword?.message}
+            register={register('adminPassword')}
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            Leave blank for regular user registration. Enter admin password to register with admin privileges.
+          </p>
+        </div>
 
         {errors.root && <ErrorAlert message={errors.root.message || ''} />}
 
