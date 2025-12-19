@@ -1,7 +1,8 @@
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { initializeApp, getApps } from "firebase/app";
-import { doc, setDoc, updateDoc, getDoc, query, collection, getDocs, orderBy, limit } from "firebase/firestore";
+import { doc, setDoc, updateDoc, getDoc, query, collection, getDocs, orderBy, limit, where } from "firebase/firestore";
 import { db } from "./firebaseClient";
+import { getAdminPassword } from "./addAdminRecord";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,47 +19,125 @@ if (!getApps().length) {
 
 export const auth = getAuth();
 
-export const loginUser = (email: string, password: string) => 
-  signInWithEmailAndPassword(auth, email, password);
+// ADMIN AUTHENTICATION (Firebase Auth + Firestore)
+export const loginAdmin = async (email: string, password: string) => {
+  const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  
+  // Verify admin exists in Firestore
+  const adminDoc = await getDoc(doc(db, "admins", userCredential.user.uid));
+  if (!adminDoc.exists()) {
+    await signOut(auth);
+    throw new Error('Access denied: Admin privileges required');
+  }
+  
+  return userCredential;
+};
 
-export const registerUser = async (email: string, password: string) => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const userId = userCredential.user.uid;
+export const registerAdmin = async (email: string, password: string) => {
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const adminId = userCredential.user.uid;
+  
+  await setDoc(doc(db, "admins", adminId), {
+    id: adminId,
+    email: userCredential.user.email,
+    password: password,
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  });
+  
+  return userCredential;
+};
+
+export const logoutAdmin = () => signOut(auth);
+
+// USER AUTHENTICATION (Firestore only)
+export const loginUser = async (email: string, password: string) => {
+  const userQuery = query(collection(db, "users"), where("email", "==", email));
+  const userSnapshot = await getDocs(userQuery);
+  
+  if (userSnapshot.empty) {
+    throw new Error('User not found');
+  }
+  
+  const userData = userSnapshot.docs[0].data();
+  if (userData.password !== password) {
+    throw new Error('Invalid password');
+  }
+  
+  await updateDoc(userSnapshot.docs[0].ref, {
+    isActive: true,
+    lastLogin: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  });
+  
+  return { user: userData, id: userSnapshot.docs[0].id };
+};
+
+export const registerUser = async (email: string, password: string, adminPassword?: string) => {
+  const userQuery = query(collection(db, "users"), where("email", "==", email));
+  const existingUser = await getDocs(userQuery);
+  
+  if (!existingUser.empty) {
+    throw new Error('This email is already registered');
+  }
+  
+  // Check if admin password is provided and validate against any admin
+  if (adminPassword) {
+    const adminsQuery = query(collection(db, "admins"));
+    const adminsSnapshot = await getDocs(adminsQuery);
     
-    const lastUserQuery = query(collection(db, "users"), orderBy("numericId", "desc"), limit(1));
-    const lastUserSnapshot = await getDocs(lastUserQuery);
-    const nextId = lastUserSnapshot.empty ? 1 : lastUserSnapshot.docs[0].data().numericId + 1;
+    let validAdminPassword = false;
+    for (const adminDoc of adminsSnapshot.docs) {
+      if (adminDoc.data().password === adminPassword) {
+        validAdminPassword = true;
+        break;
+      }
+    }
     
-    await setDoc(doc(db, "users", userId), {
-      id: userId,
-      numericId: nextId,
-      email: userCredential.user.email,
-      password: password,
+    if (!validAdminPassword) {
+      throw new Error('Invalid admin password');
+    }
+  }
+  
+  const lastUserQuery = query(collection(db, "users"), orderBy("numericId", "desc"), limit(1));
+  const lastUserSnapshot = await getDocs(lastUserQuery);
+  const nextId = lastUserSnapshot.empty ? 1 : lastUserSnapshot.docs[0].data().numericId + 1;
+  
+  const userRef = doc(collection(db, "users"));
+  const userData = {
+    id: userRef.id,
+    numericId: nextId,
+    email: email,
+    password: password,
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
+  
+  // If admin password was provided and valid, make this user an admin
+  if (adminPassword) {
+    userData.isAdmin = true;
+    // Also create admin record
+    await setDoc(doc(db, "admins", userRef.id), {
+      id: userRef.id,
+      email: email,
+      password: adminPassword,
       isActive: true,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     });
-    
-    return userCredential;
-  } catch (error: any) {
-    if (error.code === 'auth/email-already-in-use') {
-      throw new Error('This email is already registered');
-    }
-    throw error;
   }
+  
+  await setDoc(userRef, userData);
+  
+  return { user: { email, id: userRef.id, numericId: nextId, isActive: true, isAdmin: adminPassword ? true : false } };
 };
 
-export const logoutUser = async () => {
-  if (auth.currentUser) {
-    const userDoc = doc(db, "users", auth.currentUser.uid);
-    const userSnapshot = await getDoc(userDoc);
-    if (userSnapshot.exists()) {
-      await updateDoc(userDoc, {
-        isActive: false,
-        updatedAt: new Date().toISOString()
-      });
-    }
-  }
-  return signOut(auth);
+export const logoutUser = async (userId: string) => {
+  const userDoc = doc(db, "users", userId);
+  await updateDoc(userDoc, {
+    isActive: false,
+    updatedAt: new Date().toISOString()
+  });
 };
