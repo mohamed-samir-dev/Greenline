@@ -26,7 +26,7 @@ export const ProductImageGallery = ({
 
   return (
     <div>
-      <div className="w-full rounded-lg mb-4 h-[600px] overflow-hidden">
+      <div className="w-full rounded-lg mb-4 h-64 sm:h-80 lg:h-[600px] overflow-hidden">
         <Image
           src={allImages[selectedImage]}
           alt={productName}
@@ -35,12 +35,12 @@ export const ProductImageGallery = ({
           className="object-cover h-full w-full"
         />
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 overflow-x-auto pb-2">
         {allImages.slice(0, 4).map((img, idx) => (
           <div
             key={idx}
             onClick={() => onImageSelect(idx)}
-            className={`w-20 h-20 bg-gray-100 rounded cursor-pointer border-2 ${
+            className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-gray-100 rounded cursor-pointer border-2 ${
               selectedImage === idx
                 ? "border-green-600"
                 : "border-transparent"
