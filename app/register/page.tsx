@@ -7,7 +7,13 @@ import { z } from 'zod';
 import { registerUser } from '@/lib/firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Mail, Lock, Eye, EyeOff, User, AlertCircle, Loader2 } from 'lucide-react';
+import { Mail, User } from 'lucide-react';
+import AuthLayout from '@/components/auth/AuthLayout';
+import AuthInput from '@/components/auth/AuthInput';
+import PasswordInput from '@/components/auth/PasswordInput';
+import AuthButton from '@/components/auth/AuthButton';
+import ErrorAlert from '@/components/auth/ErrorAlert';
+import PasswordStrength from '@/components/auth/PasswordStrength';
 
 const registerSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -21,8 +27,6 @@ const registerSchema = z.object({
 type RegisterFormData = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
   const router = useRouter();
   
@@ -45,18 +49,6 @@ export default function RegisterPage() {
     setPasswordStrength(checkPasswordStrength(currentPassword));
   };
 
-  const getPasswordStrengthColor = () => {
-    if (passwordStrength <= 2) return 'bg-red-500';
-    if (passwordStrength <= 3) return 'bg-yellow-500';
-    return 'bg-green-500';
-  };
-
-  const getPasswordStrengthText = () => {
-    if (passwordStrength <= 2) return 'Weak';
-    if (passwordStrength <= 3) return 'Medium';
-    return 'Strong';
-  };
-
   const onSubmit = async (data: RegisterFormData) => {
     try {
       await registerUser(data.email, data.password);
@@ -68,195 +60,69 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-green-50 via-white to-green-50 flex items-center justify-center p-8">
-      <div className="w-full max-w-md space-y-8 text-black">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                Create Account
-              </h2>
-              <p className="text-gray-600">
-                Join thousands of satisfied gardeners
-              </p>
-            </div>
+    <AuthLayout title="Create Account" subtitle="Join thousands of satisfied gardeners">
+      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        <AuthInput
+          id="email"
+          label="Email Address"
+          type="email"
+          placeholder="Enter your email"
+          icon={Mail}
+          error={errors.email?.message}
+          register={register('email')}
+        />
 
-            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-              {/* Email Field */}
-              <div className="space-y-2 text-black">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email Address
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    id="email"
-                    type="email"
-                    {...register('email')}
-                    className={`text-black block w-full pl-10 pr-3 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
-                      errors.email ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-green-500 focus:border-green-500'
-                    }`}
-                    placeholder="Enter your email"
-                  />
-                </div>
-                {errors.email && (
-                  <p className="text-sm text-red-600 flex items-center gap-1">
-                    <AlertCircle className="h-4 w-4" />
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
+        <div className="space-y-2">
+          <PasswordInput
+            id="password"
+            label="Password"
+            placeholder="Create a password"
+            error={errors.password?.message}
+            register={register('password', { onChange: handlePasswordChange })}
+          />
+          <PasswordStrength strength={passwordStrength} />
+        </div>
 
-              {/* Password Field */}
-              <div className="space-y-2">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                  Password
-                </label>
-                <div className="relative">
-                  <div className=" absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    {...register('password', { onChange: handlePasswordChange })}
-                    className={`text-black block w-full pl-10 pr-10 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
-                      errors.password ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-green-500 focus:border-green-500'
-                    }`}
-                    placeholder="Create a password"
-                  />
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    ) : (
-                      <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    )}
-                  </button>
-                </div>
-                {passwordStrength > 0 && (
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-gray-500">Password strength:</span>
-                      <span className={`font-medium ${
-                        passwordStrength <= 2 ? 'text-red-500' : 
-                        passwordStrength <= 3 ? 'text-yellow-500' : 'text-green-500'
-                      }`}>
-                        {getPasswordStrengthText()}
-                      </span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className={`h-2 rounded-full transition-all duration-300 ${getPasswordStrengthColor()}`}
-                        style={{ width: `${(passwordStrength / 5) * 100}%` }}
-                      />
-                    </div>
-                  </div>
-                )}
-                {errors.password && (
-                  <p className="text-sm text-red-600 flex items-center gap-1">
-                    <AlertCircle className="h-4 w-4" />
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
+        <PasswordInput
+          id="confirmPassword"
+          label="Confirm Password"
+          placeholder="Confirm your password"
+          error={errors.confirmPassword?.message}
+          register={register('confirmPassword')}
+        />
 
-              {/* Confirm Password Field */}
-              <div className="space-y-2">
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    id="confirmPassword"
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    {...register('confirmPassword')}
-                    className={`text-black block w-full pl-10 pr-10 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
-                      errors.confirmPassword ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-green-500 focus:border-green-500'
-                    }`}
-                    placeholder="Confirm your password"
-                  />
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? (
-                      <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    ) : (
-                      <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    )}
-                  </button>
-                </div>
-                {errors.confirmPassword && (
-                  <p className="text-sm text-red-600 flex items-center gap-1">
-                    <AlertCircle className="h-4 w-4" />
-                    {errors.confirmPassword.message}
-                  </p>
-                )}
-              </div>
+        {errors.root && <ErrorAlert message={errors.root.message || ''} />}
 
-              {/* Error Message */}
-              {errors.root && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-                  <div className="flex items-center gap-2">
-                    <AlertCircle className="h-5 w-5 text-red-500" />
-                    <p className="text-sm text-red-700">{errors.root.message}</p>
-                  </div>
-                </div>
-              )}
+        <AuthButton
+          isSubmitting={isSubmitting}
+          icon={User}
+          text="Create Account"
+          loadingText="Creating Account..."
+        />
 
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Creating Account...
-                  </>
-                ) : (
-                  <>
-                    <User className="h-4 w-4" />
-                    Create Account
-                  </>
-                )}
-              </button>
+        <div className="text-center">
+          <p className="text-sm text-gray-600">
+            Already have an account?{' '}
+            <Link
+              href="/login"
+              className="font-medium text-green-600 hover:text-green-500 transition-colors"
+            >
+              Log in
+            </Link>
+          </p>
+        </div>
+      </form>
 
-              {/* Log In Link */}
-              <div className="text-center">
-                <p className="text-sm text-gray-600">
-                  Already have an account?{' '}
-                  <Link
-                    href="/login-professional"
-                    className="font-medium text-green-600 hover:text-green-500 transition-colors"
-                  >
-                    Log in
-                  </Link>
-                </p>
-              </div>
-            </form>
-
-            {/* Terms */}
-            <p className="text-xs text-gray-500 text-center">
-              By creating an account, you agree to our{' '}
-              <Link href="/terms" className="text-green-600 hover:text-green-500">
-                Terms of Service
-              </Link>{' '}
-              and{' '}
-              <Link href="/privacy" className="text-green-600 hover:text-green-500">
-                Privacy Policy
-              </Link>
-            </p>
-      </div>
-    </div>
+      <p className="text-xs text-gray-500 text-center">
+        By creating an account, you agree to our{' '}
+        <Link href="/terms" className="text-green-600 hover:text-green-500">
+          Terms of Service
+        </Link>{' '}
+        and{' '}
+        <Link href="/privacy" className="text-green-600 hover:text-green-500">
+          Privacy Policy
+        </Link>
+      </p>
+    </AuthLayout>
   );
 }
