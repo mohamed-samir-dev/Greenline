@@ -16,19 +16,19 @@ const values = [
 
 export default function ValuesGrid() {
   return (
-    <section className="py-20 bg-linear-to-br from-gray-50 to-green-50">
+    <section className="py-12 sm:py-16 md:py-20 bg-linear-to-br from-gray-50 to-green-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
           {...fadeInUp}
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Core Values</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">Core Values</h2>
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0">
             The principles that drive our innovation and guide our commitment to excellence
           </p>
         </motion.div>
         <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
           variants={staggerContainer}
           initial="initial"
           whileInView="animate"
@@ -41,13 +41,13 @@ export default function ValuesGrid() {
                 key={index}
                 variants={fadeInUp}
                 whileHover={{ scale: 1.05, y: -5 }}
-                className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
+                className="group bg-white p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
               >
-                <div className={`w-16 h-16 bg-linear-to-r ${value.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                  <IconComponent className="h-8 w-8 text-white" />
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 bg-linear-to-r ${value.color} rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform`}>
+                  <IconComponent className="h-7 w-7 sm:h-8 sm:w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{value.desc}</p>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">{value.title}</h3>
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{value.desc}</p>
               </motion.div>
             );
           })}
