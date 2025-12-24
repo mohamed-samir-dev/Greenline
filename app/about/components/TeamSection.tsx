@@ -13,14 +13,14 @@ const teamMembers = [
 
 export default function TeamSection() {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-12 sm:py-16 md:py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="text-center mb-16" {...fadeInUp}>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Leadership Team</h2>
-          <p className="text-xl text-gray-600">Experts driving agricultural innovation</p>
+        <motion.div className="text-center mb-12 sm:mb-16" {...fadeInUp}>
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">Leadership Team</h2>
+          <p className="text-lg sm:text-xl text-gray-600">Experts driving agricultural innovation</p>
         </motion.div>
         <motion.div 
-          className="grid md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
           variants={staggerContainer}
           initial="initial"
           whileInView="animate"
@@ -33,14 +33,14 @@ export default function TeamSection() {
                 key={index}
                 variants={fadeInUp}
                 whileHover={{ y: -10 }}
-                className="bg-white p-8 rounded-2xl shadow-lg text-center"
+                className="bg-white p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-lg text-center"
               >
-                <div className="w-24 h-24 bg-linear-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <IconComponent className="h-12 w-12 text-white" />
+                <div className="w-20 h-20 sm:w-24 sm:h-24 bg-linear-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                  <IconComponent className="h-10 w-10 sm:h-12 sm:w-12 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
-                <p className="text-green-600 font-semibold mb-2">{member.role}</p>
-                <p className="text-gray-600">{member.exp}</p>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
+                <p className="text-green-600 font-semibold mb-2 text-sm sm:text-base">{member.role}</p>
+                <p className="text-gray-600 text-sm sm:text-base">{member.exp}</p>
               </motion.div>
             );
           })}
