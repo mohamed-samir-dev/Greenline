@@ -5,16 +5,16 @@ import { fadeInUp } from './animations';
 
 export default function ContactHero() {
   return (
-    <section className="bg-linear-to-br from-green-50 to-emerald-50 py-20">
+    <section className="bg-linear-to-br from-green-50 to-emerald-50 py-12 sm:py-16 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.h1 
-          className="text-5xl font-bold bg-linear-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-6"
+          className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-linear-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-4 sm:mb-6"
           {...fadeInUp}
         >
           Get Expert Advice
         </motion.h1>
         <motion.p 
-          className="text-xl text-gray-600 max-w-3xl mx-auto"
+          className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-2"
           {...fadeInUp}
           transition={{ delay: 0.2 }}
         >
