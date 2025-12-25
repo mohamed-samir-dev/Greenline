@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/
+
+# Allow specific API endpoints for SEO
+Allow: /api/products/
+
+# Sitemap location
+Sitemap: https://greenline-lcbc.vercel.app//sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1

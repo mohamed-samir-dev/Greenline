@@ -1,5 +1,5 @@
 'use client';
-
+import type { Metadata } from 'next';
 import { useProductsData } from '@/hooks/useProductsData';
 import { useProductFilters } from '@/hooks/useProductFilters';
 import { usePagination } from '@/hooks/usePagination';
@@ -12,7 +12,22 @@ import {
 import ProductsSkeleton from '@/components/ui/ProductsSkeleton';
 import { useSearch } from '@/contexts';
 
-export default function ProductsPage() {
+export const metadata: Metadata = {
+  title: 'Premium Fertilizers & Plant Nutrition Products',
+  description: 'Browse our extensive collection of organic fertilizers, chemical formulas, liquid concentrates, and granular products. Find the perfect nutrition solution for your crops.',
+  keywords: ['fertilizers', 'organic fertilizers', 'liquid fertilizers', 'granular fertilizers', 'plant nutrition', 'crop fertilizers', 'agricultural products'],
+  openGraph: {
+    title: 'Premium Fertilizers & Plant Nutrition Products | Greenline',
+    description: 'Browse our extensive collection of premium fertilizers and plant nutrition products for optimal crop growth.',
+    images: ['/images/logo.png'],
+  },
+  alternates: {
+    canonical: '/products',
+  },
+};
+
+
+function ProductsPageContent() {
   const { products, loading } = useProductsData();
   const { searchQuery } = useSearch();
   const {
@@ -96,4 +111,8 @@ export default function ProductsPage() {
       </div>
     </div>
   );
+}
+
+export default function ProductsPage() {
+  return <ProductsPageContent />;
 }
