@@ -10,6 +10,11 @@ export const useProductsData = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        if (!db) {
+          console.error('Database not initialized');
+          return;
+        }
+        
         const snapshot = await getDocs(collection(db, 'products'));
         const productsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
         setProducts(productsData);

@@ -9,7 +9,6 @@ export const useRealTimeStock = (productId: string) => {
 
   useEffect(() => {
     if (!productId || !db) {
-      setLoading(false);
       return;
     }
 

@@ -27,7 +27,6 @@ export const useProducts = () => {
 
   useEffect(() => {
     if (!auth) {
-      setLoading(false);
       return;
     }
     

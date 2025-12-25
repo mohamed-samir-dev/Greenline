@@ -35,7 +35,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
           <div className="max-h-64 overflow-y-auto">
             {items.slice(0, 3).map((item) => (
               <div key={`${item.id}-${item.size || 'default'}`} className="p-4 border-b border-gray-100 flex items-center gap-3">
-                <div className="relative w-12 h-12 flex-shrink-0">
+                <div className="relative w-12 h-12 shrink-0">
                   <Image
                     src={item.image}
                     alt={item.name}

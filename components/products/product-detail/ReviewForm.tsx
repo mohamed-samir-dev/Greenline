@@ -21,6 +21,11 @@ export const ReviewForm = ({ productId, onReviewSubmit, onClose }: ReviewFormPro
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      if (!db) {
+        console.error('Database not initialized');
+        return;
+      }
+      
       const newReview = {
         userName: reviewForm.userName,
         userImage: "/api/placeholder/40/40",

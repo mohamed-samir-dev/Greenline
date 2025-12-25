@@ -22,6 +22,11 @@ export default function SafetyForm({ productId }: SafetyFormProps) {
     setLoading(true);
 
     try {
+      if (!db) {
+        toast.error("Database not initialized");
+        return;
+      }
+      
       const timestamp = Date.now();
       const sanitizedTitle = formData.title.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
       const safetyId = `${sanitizedTitle}_${timestamp}`;

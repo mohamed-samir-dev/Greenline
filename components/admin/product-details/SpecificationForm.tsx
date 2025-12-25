@@ -23,6 +23,11 @@ export default function SpecificationForm({ productId }: SpecificationFormProps)
     setLoading(true);
 
     try {
+      if (!db) {
+        toast.error("Database not initialized");
+        return;
+      }
+      
       // Create structured document ID: nutrient_timestamp
       const timestamp = Date.now();
       const sanitizedNutrient = formData.nutrient.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');

@@ -12,6 +12,11 @@ export const useProductReviews = (productId: string) => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
+        if (!db) {
+          console.error('Database not initialized');
+          return;
+        }
+        
         const reviewsSnap = await getDocs(collection(db, "products", productId, "reviews"));
         const reviewsData = reviewsSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Review));
         

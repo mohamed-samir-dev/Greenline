@@ -49,7 +49,7 @@ export const ReviewsList = ({ reviews, onWriteReview }: ReviewsListProps) => {
           reviews.map((review) => (
             <div key={review.id} className="border-b border-gray-200 pb-4 sm:pb-6 last:border-0">
               <div className="flex items-start gap-3 sm:gap-4">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-200 rounded-full flex items-center justify-center shrink-0">
                   <span className="text-xs sm:text-sm font-medium text-gray-600">
                     {review.userName.charAt(0).toUpperCase()}
                   </span>

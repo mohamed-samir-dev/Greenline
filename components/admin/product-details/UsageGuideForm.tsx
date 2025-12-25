@@ -23,6 +23,11 @@ export default function UsageGuideForm({ productId }: UsageGuideFormProps) {
     setLoading(true);
 
     try {
+      if (!db) {
+        toast.error("Database not initialized");
+        return;
+      }
+      
       const timestamp = Date.now();
       const usageId = `step-${formData.stepNumber}_${timestamp}`;
       

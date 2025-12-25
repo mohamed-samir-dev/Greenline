@@ -9,7 +9,6 @@ export const useRealTimeProducts = () => {
 
   useEffect(() => {
     if (!db) {
-      setLoading(false);
       return;
     }
     

@@ -1,10 +1,12 @@
 // Utility to add admin record to Firestore for existing Firebase auth user
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { updatePassword } from "firebase/auth";
-import { db } from "./firebaseClient";
-import { auth } from "./auth";
+import { db } from "./config";
+import { auth } from "./config";
 
 export const addAdminRecord = async (userId: string, email: string, password?: string) => {
+  if (!db) throw new Error('Firestore not initialized');
+  
   await setDoc(doc(db, "admins", userId), {
     id: userId,
     email: email,
@@ -19,6 +21,8 @@ export const addAdminRecord = async (userId: string, email: string, password?: s
 
 // Get admin password for current logged-in admin
 export const getAdminPassword = async () => {
+  if (!db || !auth) return null;
+  
   const currentUser = auth.currentUser;
   if (!currentUser) return null;
   
@@ -31,6 +35,8 @@ export const getAdminPassword = async () => {
 
 // Update current admin's password in both Firebase Auth and Firestore
 export const updateAdminPassword = async (newPassword: string) => {
+  if (!db || !auth) throw new Error('Firebase not initialized');
+  
   const currentUser = auth.currentUser;
   if (!currentUser) throw new Error('No authenticated admin');
   

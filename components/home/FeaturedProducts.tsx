@@ -17,6 +17,11 @@ export default function FeaturedProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        if (!db) {
+          console.error('Database not initialized');
+          return;
+        }
+        
         const q = query(collection(db, 'products'), limit(4));
         const querySnapshot = await getDocs(q);
         const productsData = querySnapshot.docs.map((doc) => ({

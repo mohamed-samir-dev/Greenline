@@ -55,6 +55,11 @@ export const useEditProduct = (product: Product | null) => {
 
     setUploading(true);
     try {
+      if (!db) {
+        toast.error("Database not initialized");
+        return;
+      }
+      
       const productRef = doc(db, "products", product.id);
       
       const stockQty = parseInt(formData.stockQuantity) || 0;

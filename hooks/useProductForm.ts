@@ -65,6 +65,12 @@ export const useProductForm = () => {
     setUploading(true);
 
     try {
+      if (!db) {
+        toast.error("Database not initialized");
+        setUploading(false);
+        return;
+      }
+      
       const sequentialId = parseInt(formData.sequentialId);
       
       // Create structured document ID: category_productname_timestamp

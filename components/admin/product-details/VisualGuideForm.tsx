@@ -22,6 +22,16 @@ export default function VisualGuideForm({ productId }: VisualGuideFormProps) {
     setLoading(true);
 
     try {
+      if (!db) {
+        toast.error("Database not initialized");
+        return;
+      }
+      
+      if (!db) {
+        toast.error("Database not initialized");
+        return;
+      }
+      
       const timestamp = Date.now();
       const sanitizedCaption = formData.caption.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
       const visualId = `${sanitizedCaption}_${timestamp}`;

@@ -1,8 +1,10 @@
 // Initialize admin password in Firestore
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "./firebaseClient";
+import { db } from "./config";
 
 export const initializeAdminPassword = async (initialPassword: string = "admin123") => {
+  if (!db) throw new Error('Firestore not initialized');
+  
   try {
     await setDoc(doc(db, "admins", "config"), {
       password: initialPassword,
