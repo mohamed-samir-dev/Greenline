@@ -17,27 +17,6 @@
 
 ---
 
-## 📋 Table of Contents
-
-- [🎯 Overview](#-overview)
-- [✨ Features](#-features)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [🚀 Quick Start](#-quick-start)
-- [📦 Installation](#-installation)
-- [⚙️ Configuration](#️-configuration)
-- [🏗️ Project Structure](#️-project-structure)
-- [🔐 Authentication](#-authentication)
-- [📊 Admin Dashboard](#-admin-dashboard)
-- [🌐 API Reference](#-api-reference)
-- [🚀 Deployment](#-deployment)
-- [🧪 Testing](#-testing)
-- [🛡️ Security](#️-security)
-- [📈 Performance](#-performance)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
-- [📞 Support](#-support)
-
----
 
 ## 🎯 Overview
 
