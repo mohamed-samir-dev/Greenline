@@ -14,6 +14,7 @@ export default function AdminDashboard() {
   const router = useRouter();
 
   const loadStats = async () => {
+    if (!db) return;
     const productsSnap = await getDocs(collection(db, "products"));
     const ordersSnap = await getDocs(collection(db, "orders"));
     const revenue = ordersSnap.docs.reduce((sum, doc) => sum + (doc.data().total || 0), 0);
@@ -21,6 +22,11 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
+    if (!auth) {
+      router.push("/admin/login");
+      return;
+    }
+    
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         await loadStats();

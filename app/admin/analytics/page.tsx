@@ -11,6 +11,11 @@ export default function AdminAnalytics() {
   const router = useRouter();
 
   useEffect(() => {
+    if (!auth) {
+      router.push("/admin/login");
+      return;
+    }
+    
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) router.push("/admin/login");
       setLoading(false);

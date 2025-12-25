@@ -22,12 +22,18 @@ export default function AdminOrders() {
   const router = useRouter();
 
   const loadOrders = async () => {
+    if (!db) return;
     const querySnapshot = await getDocs(collection(db, "orders"));
     const ordersData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Order));
     setOrders(ordersData);
   };
 
   useEffect(() => {
+    if (!auth) {
+      router.push("/admin/login");
+      return;
+    }
+    
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         await loadOrders();
