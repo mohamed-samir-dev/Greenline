@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { collection, onSnapshot, query } from 'firebase/firestore';
-import { db } from '@/lib/firebase/firebaseClient';
+import { db } from '@/lib/firebase/config';
 import { Product } from '@/types/product';
 
 export const useRealTimeProducts = () => {
@@ -8,6 +8,11 @@ export const useRealTimeProducts = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!db) {
+      setLoading(false);
+      return;
+    }
+    
     const q = query(collection(db, 'products'));
     
     const unsubscribe = onSnapshot(q, (snapshot) => {

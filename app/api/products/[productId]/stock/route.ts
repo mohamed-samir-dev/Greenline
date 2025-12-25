@@ -23,6 +23,14 @@ export async function PATCH(
       );
     }
 
+    // Check if Firebase is properly configured
+    if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
+      return NextResponse.json(
+        { error: 'Firebase not configured' },
+        { status: 503 }
+      );
+    }
+
     let success = false;
 
     if (action === 'decrease') {

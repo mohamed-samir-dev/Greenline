@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "@/lib/firebase/auth";
-import { db } from "@/lib/firebase/firebaseClient";
+import { auth, db } from "@/lib/firebase/config";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { Product } from "@/types/product";
@@ -13,6 +12,11 @@ export const useProducts = () => {
   const router = useRouter();
 
   const loadProducts = async () => {
+    if (!db) {
+      console.error('Firebase not initialized');
+      return;
+    }
+    
     const querySnapshot = await getDocs(collection(db, "products"));
     const productsData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
@@ -22,6 +26,11 @@ export const useProducts = () => {
   };
 
   useEffect(() => {
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
+    
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         loadProducts();
@@ -34,6 +43,11 @@ export const useProducts = () => {
   }, [router]);
 
   const handleDelete = async (id: string) => {
+    if (!db) {
+      toast.error('Firebase not initialized');
+      return;
+    }
+    
     toast.promise(
       deleteDoc(doc(db, "products", id)).then(() => loadProducts()),
       {

@@ -1,7 +1,7 @@
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
-import { initializeApp, getApps } from "firebase/app";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, setDoc, updateDoc, getDoc, query, collection, getDocs, orderBy, limit, where } from "firebase/firestore";
-import { db } from "./firebaseClient";
+import { auth, db } from "./config";
+
 interface UserData {
   id: string;
   numericId: number;
@@ -13,27 +13,14 @@ interface UserData {
   isAdmin?: boolean;
 }
 
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
-
-// Initialize Firebase app
-let app;
-if (!getApps().length) {
-  app = initializeApp(firebaseConfig);
-} else {
-  app = getApps()[0];
-}
-
-export const auth = getAuth(app);
+export { auth };
 
 // ADMIN AUTHENTICATION (Firebase Auth + Firestore)
 export const loginAdmin = async (email: string, password: string) => {
+  if (!auth || !db) {
+    throw new Error('Firebase not initialized');
+  }
+  
   const userCredential = await signInWithEmailAndPassword(auth, email, password);
   
   // Verify admin exists in Firestore
@@ -47,6 +34,10 @@ export const loginAdmin = async (email: string, password: string) => {
 };
 
 export const registerAdmin = async (email: string, password: string) => {
+  if (!auth || !db) {
+    throw new Error('Firebase not initialized');
+  }
+  
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const adminId = userCredential.user.uid;
   
@@ -63,11 +54,18 @@ export const registerAdmin = async (email: string, password: string) => {
 };
 
 export const logoutAdmin = () => {
+  if (!auth) {
+    throw new Error('Firebase not initialized');
+  }
   return signOut(auth);
 };
 
 // USER AUTHENTICATION (Firestore only)
 export const loginUser = async (email: string, password: string) => {
+  if (!db) {
+    throw new Error('Firebase not initialized');
+  }
+  
   const userQuery = query(collection(db, "users"), where("email", "==", email));
   const userSnapshot = await getDocs(userQuery);
   
@@ -90,6 +88,10 @@ export const loginUser = async (email: string, password: string) => {
 };
 
 export const registerUser = async (email: string, password: string, adminPassword?: string) => {
+  if (!db) {
+    throw new Error('Firebase not initialized');
+  }
+  
   const userQuery = query(collection(db, "users"), where("email", "==", email));
   const existingUser = await getDocs(userQuery);
   
@@ -150,6 +152,10 @@ export const registerUser = async (email: string, password: string, adminPasswor
 };
 
 export const logoutUser = async (userId: string) => {
+  if (!db) {
+    throw new Error('Firebase not initialized');
+  }
+  
   const userDoc = doc(db, "users", userId);
   await updateDoc(userDoc, {
     isActive: false,

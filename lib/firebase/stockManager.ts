@@ -1,9 +1,14 @@
-import { db } from './firebaseClient';
+import { db } from './config';
 import { doc, updateDoc, runTransaction } from 'firebase/firestore';
 import { Product, ProductSize } from '@/types/product';
 
 export class StockManager {
   static async decreaseStock(productId: string, size?: string, quantity: number = 1): Promise<boolean> {
+    if (!db) {
+      console.error('Firebase not initialized');
+      return false;
+    }
+    
     try {
       const productRef = doc(db, 'products', productId);
       
@@ -64,6 +69,11 @@ export class StockManager {
   }
 
   static async increaseStock(productId: string, size?: string, quantity: number = 1): Promise<boolean> {
+    if (!db) {
+      console.error('Firebase not initialized');
+      return false;
+    }
+    
     try {
       const productRef = doc(db, 'products', productId);
       

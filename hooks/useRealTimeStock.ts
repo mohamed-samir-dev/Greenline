@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from '@/lib/firebase/firebaseClient';
+import { db } from '@/lib/firebase/config';
 import { Product } from '@/types/product';
 
 export const useRealTimeStock = (productId: string) => {
@@ -8,7 +8,10 @@ export const useRealTimeStock = (productId: string) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!productId) return;
+    if (!productId || !db) {
+      setLoading(false);
+      return;
+    }
 
     const unsubscribe = onSnapshot(
       doc(db, 'products', productId),

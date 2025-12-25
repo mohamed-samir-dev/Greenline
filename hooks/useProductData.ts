@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db } from "@/lib/firebase/firebaseClient";
+import { db } from "@/lib/firebase/config";
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import {
   Product,
@@ -23,6 +23,11 @@ export const useProductData = (productId: string) => {
 
   useEffect(() => {
     const fetchProduct = async () => {
+      if (!db) {
+        setLoading(false);
+        return;
+      }
+      
       try {
         const productDoc = await getDoc(doc(db, "products", productId));
         if (productDoc.exists()) {

@@ -1,7 +1,11 @@
-import { db } from "./firebaseClient";
+import { db } from "./config";
 import { doc, getDoc, setDoc, collection, getDocs, writeBatch, query, orderBy } from "firebase/firestore";
 
 export const getNextSequentialId = async (): Promise<number> => {
+  if (!db) {
+    throw new Error('Firebase not initialized');
+  }
+  
   const counterDoc = await getDoc(doc(db, "counters", "productSequentialId"));
   
   if (!counterDoc.exists()) {
@@ -15,6 +19,10 @@ export const getNextSequentialId = async (): Promise<number> => {
 };
 
 export const validateSequentialId = async (sequentialId: number): Promise<boolean> => {
+  if (!db) {
+    throw new Error('Firebase not initialized');
+  }
+  
   const productsQuery = query(collection(db, "products"));
   const snapshot = await getDocs(productsQuery);
   
@@ -22,6 +30,10 @@ export const validateSequentialId = async (sequentialId: number): Promise<boolea
 };
 
 export const reorganizeSequentialIds = async (): Promise<void> => {
+  if (!db) {
+    throw new Error('Firebase not initialized');
+  }
+  
   const productsQuery = query(collection(db, "products"), orderBy("createdAt"));
   const snapshot = await getDocs(productsQuery);
   
