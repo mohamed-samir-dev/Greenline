@@ -2,7 +2,16 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, si
 import { initializeApp, getApps } from "firebase/app";
 import { doc, setDoc, updateDoc, getDoc, query, collection, getDocs, orderBy, limit, where } from "firebase/firestore";
 import { db } from "./firebaseClient";
-import { getAdminPassword } from "./addAdminRecord";
+interface UserData {
+  id: string;
+  numericId: number;
+  email: string;
+  password: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  isAdmin?: boolean;
+}
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -105,7 +114,7 @@ export const registerUser = async (email: string, password: string, adminPasswor
   const nextId = lastUserSnapshot.empty ? 1 : lastUserSnapshot.docs[0].data().numericId + 1;
   
   const userRef = doc(collection(db, "users"));
-  const userData = {
+  const userData: UserData = {
     id: userRef.id,
     numericId: nextId,
     email: email,

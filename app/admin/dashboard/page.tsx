@@ -13,6 +13,13 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState({ products: 0, orders: 0, revenue: 0, customers: 0 });
   const router = useRouter();
 
+  const loadStats = async () => {
+    const productsSnap = await getDocs(collection(db, "products"));
+    const ordersSnap = await getDocs(collection(db, "orders"));
+    const revenue = ordersSnap.docs.reduce((sum, doc) => sum + (doc.data().total || 0), 0);
+    setStats({ products: productsSnap.size, orders: ordersSnap.size, revenue, customers: 0 });
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -24,13 +31,6 @@ export default function AdminDashboard() {
     });
     return () => unsubscribe();
   }, [router]);
-
-  const loadStats = async () => {
-    const productsSnap = await getDocs(collection(db, "products"));
-    const ordersSnap = await getDocs(collection(db, "orders"));
-    const revenue = ordersSnap.docs.reduce((sum, doc) => sum + (doc.data().total || 0), 0);
-    setStats({ products: productsSnap.size, orders: ordersSnap.size, revenue, customers: 0 });
-  };
 
   if (loading) return <div className="flex"><AdminSidebar /><div className="ml-64 p-8">Loading...</div></div>;
 
@@ -54,7 +54,7 @@ export default function AdminDashboard() {
                   <p className="text-gray-600 text-sm font-medium">{card.title}</p>
                   <p className="text-3xl font-bold text-gray-900 mt-2">{card.value}</p>
                 </div>
-                <div className={`w-14 h-14 bg-gradient-to-br ${card.color} rounded-lg flex items-center justify-center`}>
+                <div className={`w-14 h-14 bg-linear-to-br ${card.color} rounded-lg flex items-center justify-center`}>
                   <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={card.icon} />
                   </svg>

@@ -15,7 +15,7 @@ export const SizeRow = ({ size, index, onUpdate, onRemove, canRemove }: SizeRowP
           value={size.size}
           onChange={(e) => onUpdate(index, 'size', e.target.value)}
           onBlur={(e) => {
-            let value = e.target.value.trim();
+            const value = e.target.value.trim();
             if (value && !value.toLowerCase().endsWith('kg')) {
               onUpdate(index, 'size', value + 'kg');
             }

@@ -12,11 +12,9 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const [selectedSize, setSelectedSize] = useState(
     product.sizes && product.sizes.length > 0 ? product.sizes[0].size : ""
   );
-  const [quantity, setQuantity] = useState(1);
   
   const selectedSizeData = product.sizes?.find(s => s.size === selectedSize);
   const selectedPrice = selectedSizeData?.price || product.price;
-  const selectedStock = selectedSizeData?.stockQuantity || product.stockQuantity;
 
   return (
     <div className="lg:pl-4">
@@ -66,7 +64,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             selectedSize={selectedSizeData}
             className="flex-1 py-3 px-4 text-sm sm:text-base"
           />
-          <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-red-500 transition-colors sm:flex-shrink-0">
+          <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-red-500 transition-colors sm:shrink-0">
             <FaHeart className="w-5 h-5 mx-auto" />
           </button>
         </div>

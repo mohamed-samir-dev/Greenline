@@ -62,7 +62,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartI
                     console.error('Failed to remove item:', error);
                   }
                 }}
-                className="text-gray-400 hover:text-red-500 transition-colors p-2 hover:bg-red-50 rounded-full flex-shrink-0"
+                className="text-gray-400 hover:text-red-500 transition-colors p-2 hover:bg-red-50 rounded-full shrink-0"
               >
                 <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>

@@ -40,7 +40,7 @@ export const ProductImageGallery = ({
           <div
             key={idx}
             onClick={() => onImageSelect(idx)}
-            className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-gray-100 rounded cursor-pointer border-2 ${
+            className={`shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-gray-100 rounded cursor-pointer border-2 ${
               selectedImage === idx
                 ? "border-green-600"
                 : "border-transparent"

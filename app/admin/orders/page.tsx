@@ -8,10 +8,24 @@ import { collection, getDocs } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 
+interface Order {
+  id: string;
+  customerName?: string;
+  total?: number;
+  status?: string;
+  createdAt?: string;
+}
+
 export default function AdminOrders() {
   const [loading, setLoading] = useState(true);
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const router = useRouter();
+
+  const loadOrders = async () => {
+    const querySnapshot = await getDocs(collection(db, "orders"));
+    const ordersData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Order));
+    setOrders(ordersData);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -24,12 +38,6 @@ export default function AdminOrders() {
     });
     return () => unsubscribe();
   }, [router]);
-
-  const loadOrders = async () => {
-    const querySnapshot = await getDocs(collection(db, "orders"));
-    const ordersData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    setOrders(ordersData);
-  };
 
   if (loading) return <div className="flex"><AdminSidebar /><div className="ml-64 p-8">Loading...</div></div>;
 

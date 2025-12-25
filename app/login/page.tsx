@@ -32,7 +32,13 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const result = await loginUser(data.email, data.password);
-      login(result.user);
+      const user = {
+        id: result.user.id,
+        email: result.user.email,
+        numericId: result.user.numericId,
+        isActive: result.user.isActive
+      };
+      login(user);
       router.push('/');
     } catch (error: unknown) {
       const err = error as { message?: string };

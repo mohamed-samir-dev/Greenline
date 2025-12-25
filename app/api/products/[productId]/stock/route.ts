@@ -3,10 +3,10 @@ import { StockManager } from '@/lib/firebase/stockManager';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { productId: string } }
+  { params }: { params: Promise<{ productId: string }> }
 ) {
   try {
-    const { productId } = params;
+    const { productId } = await params;
     const { action, size, quantity = 1 } = await request.json();
 
     if (!action || !['decrease', 'increase'].includes(action)) {

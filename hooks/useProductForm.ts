@@ -1,10 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { db } from "@/lib/firebase/firebaseClient";
-import { collection, doc, setDoc } from "firebase/firestore";
+import {  doc, setDoc } from "firebase/firestore";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { getNextSequentialId } from "@/lib/firebase/productIdManager";
+import { Product } from "@/types/product";
 
 export interface ProductFormData {
   sequentialId: string;
@@ -89,7 +90,8 @@ export const useProductForm = () => {
       // Use first size price as base price
       const basePrice = sizes.length > 0 ? sizes[0].price : parseFloat(formData.price) || 0;
       
-      const productData = {
+      const productData: Product = {
+        id: productId,
         sequentialId: sequentialId,
         name: formData.name,
         price: basePrice,
