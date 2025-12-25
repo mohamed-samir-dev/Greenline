@@ -23,6 +23,10 @@ export default function DosageForm({ productId }: DosageFormProps) {
     setLoading(true);
 
     try {
+      if (!db) {
+        throw new Error('Database not initialized');
+      }
+      
       const timestamp = Date.now();
       const sanitizedPlantType = formData.plantType.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
       const dosageId = `${sanitizedPlantType}_${timestamp}`;

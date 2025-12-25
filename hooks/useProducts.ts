@@ -13,7 +13,6 @@ export const useProducts = () => {
   const router = useRouter();
 
   const loadProducts = async () => {
-    if (!db) return;
     const querySnapshot = await getDocs(collection(db, "products"));
     const productsData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
@@ -23,11 +22,6 @@ export const useProducts = () => {
   };
 
   useEffect(() => {
-    if (!auth) {
-      router.push("/admin/login");
-      return;
-    }
-    
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         loadProducts();
@@ -40,7 +34,6 @@ export const useProducts = () => {
   }, [router]);
 
   const handleDelete = async (id: string) => {
-    if (!db) return;
     toast.promise(
       deleteDoc(doc(db, "products", id)).then(() => loadProducts()),
       {

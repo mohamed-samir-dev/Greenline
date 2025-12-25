@@ -20,11 +20,13 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window === 'undefined') return null;
+    try {
       const savedUser = localStorage.getItem('user');
       return savedUser ? JSON.parse(savedUser) : null;
+    } catch {
+      return null;
     }
-    return null;
   });
 
   const login = (userData: User) => {
