@@ -20,7 +20,7 @@ export default function SeasonalBanner() {
           </div>
           <Link
             href="/products?category=fertilizers"
-            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 sm:px-7 sm:py-3.5 lg:px-8 lg:py-4 rounded-lg font-semibold transition-colors text-sm sm:text-base whitespace-nowrap"
+            className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 sm:px-7 sm:py-3.5 lg:px-8 lg:py-4 rounded-lg font-semibold transition-colors text-sm sm:text-base whitespace-nowrap"
           >
             Shop Seasonal Offers
           </Link>

@@ -51,12 +51,12 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             {user && <UserProfileCircle user={user} />}
             {!user && (
-              <Link href="/register" className="p-2 bg-green-200 rounded hover:bg-green-100">
+              <Link href="/register" className="p-2 bg-green-200 rounded hover:bg-green-100" aria-label="تسجيل حساب جديد">
                 <UserPlus className="h-5 w-5 text-gray-700" />
               </Link>
             )}
             {user && (
-              <button onClick={handleLogout} className="p-2 bg-green-200 rounded hover:bg-green-100">
+              <button onClick={handleLogout} className="p-2 bg-green-200 rounded hover:bg-green-100" aria-label="تسجيل الخروج">
                 <LogOut className="h-5 w-5 text-gray-700" />
               </button>
             )}
@@ -64,6 +64,7 @@ export default function Navbar() {
               <button 
                 onClick={() => setIsMiniCartOpen(!isMiniCartOpen)}
                 className="p-2 bg-green-200 rounded hover:bg-green-100"
+                aria-label="عربة التسوق"
               >
                 <CartIcon />
               </button>

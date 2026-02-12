@@ -3,14 +3,14 @@ export default function Newsletter() {
     <div>
       <h4 className="text-base sm:text-lg font-semibold text-white mb-4 sm:mb-6">Stay Connected</h4>
       <p className="text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">Get expert tips and exclusive offers delivered to your inbox.</p>
-      <div className="space-y-3 mb-4 sm:mb-6">
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-0">
+      <div className="mb-4 sm:mb-6">
+        <div className="flex flex-col lg:flex-row gap-2">
           <input
             type="email"
             placeholder="Enter your email"
-            className="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-white/10 border border-white/20 rounded-lg sm:rounded-l-lg sm:rounded-r-none text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
+            className="w-full lg:flex-1 px-3 sm:px-4 py-2.5 sm:py-3 bg-white/10 border border-white/20 rounded-lg lg:rounded-l-lg lg:rounded-r-none text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
           />
-          <button className="px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-green-500 to-emerald-500 text-white rounded-lg sm:rounded-l-none sm:rounded-r-lg font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base">
+          <button className="w-full lg:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg lg:rounded-l-none lg:rounded-r-lg font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base whitespace-nowrap">
             Subscribe
           </button>
         </div>

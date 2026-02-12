@@ -79,7 +79,7 @@ export default function FeaturedProducts() {
                 </p>
                 <button 
                   onClick={() => router.push(`/products/${product.id}`)}
-                  className="w-full bg-green-600 cursor-pointer text-white font-medium py-2 px-4 rounded transition-colors text-sm sm:text-base"
+                  className="w-full bg-green-700 hover:bg-green-800 cursor-pointer text-white font-medium py-2 px-4 rounded transition-colors text-sm sm:text-base"
                 >
                   View Details
                 </button>
