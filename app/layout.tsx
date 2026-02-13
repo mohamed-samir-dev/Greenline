@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
@@ -75,20 +75,20 @@ export const metadata: Metadata = {
   category: 'agriculture',
   classification: 'Business',
   referrer: 'origin-when-cross-origin',
-  colorScheme: 'light',
-  themeColor: '#22c55e',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
- 
   alternates: {
     canonical: 'https://greenline-lcbc.vercel.app/',
     languages: {
       'en-US': 'https://greenline-lcbc.vercel.app/',
     },
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#22c55e',
+  colorScheme: 'light',
 };
 
 export default function RootLayout({
