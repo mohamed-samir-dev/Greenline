@@ -1,5 +1,4 @@
-import { db } from '@/lib/firebase/firebaseClient';
-import { collection, getDocs, query, limit } from 'firebase/firestore';
+import { adminDb } from '@/lib/firebase/firebaseAdmin';
 import { Product } from '@/types/product';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,10 +7,8 @@ const bgColors = ['bg-teal-600', 'bg-red-600', 'bg-green-600', 'bg-amber-700'];
 
 async function getProducts() {
   try {
-    if (!db) return [];
-    const q = query(collection(db, 'products'), limit(4));
-    const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map((doc) => ({
+    const snapshot = await adminDb.collection('products').limit(4).get();
+    return snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     })) as Product[];
