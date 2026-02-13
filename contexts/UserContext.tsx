@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface User {
   id: string;
@@ -19,15 +19,18 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(() => {
-    if (typeof window === 'undefined') return null;
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
     try {
       const savedUser = localStorage.getItem('user');
-      return savedUser ? JSON.parse(savedUser) : null;
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
+      }
     } catch {
-      return null;
+      // Ignore errors
     }
-  });
+  }, []);
 
   const login = (userData: User) => {
     setUser(userData);

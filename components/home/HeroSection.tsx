@@ -9,8 +9,10 @@ export default function HeroSection() {
           src="/images/hero-leaves.webp"
           alt="Fresh organic green leaves with water droplets"
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1280px"
           className="object-cover"
           priority
+          quality={85}
         />
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative h-full flex items-end pb-6 px-6 sm:pb-8 sm:px-8 lg:pb-12 lg:px-12">
@@ -22,7 +24,7 @@ export default function HeroSection() {
               Premium organic fertilizer enriched with natural nutrients for healthier plants and vibrant growth
             </p>
             <Link
-              href="/products" prefetch={true}
+              href="/products"
               className="inline-block bg-green-700 hover:bg-green-900 text-white font-semibold px-6 py-2 sm:px-7 sm:py-2.5 lg:px-8 lg:py-3 rounded transition-colors text-sm sm:text-base"
             >
               Shop Now

@@ -1,9 +1,13 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/footer/Footer";
 import { SearchProvider, UserProvider } from "@/contexts";
+
+const Footer = dynamic(() => import("@/components/footer/Footer"), {
+  ssr: false,
+});
 
 export default function ClientLayout({
   children,

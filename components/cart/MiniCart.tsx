@@ -20,7 +20,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center justify-between">
           <h3 className="font-semibold text-gray-900">Shopping Cart</h3>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600" aria-label="Close cart">
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -57,6 +57,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                     }
                   }}
                   className="text-gray-400 hover:text-red-500"
+                  aria-label={`Remove ${item.name} from cart`}
                 >
                   <X className="h-4 w-4" />
                 </button>

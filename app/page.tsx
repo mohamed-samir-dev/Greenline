@@ -1,3 +1,6 @@
+export const dynamic = 'force-static';
+export const revalidate = 3600; // Revalidate every hour
+
 import type { Metadata } from 'next';
 import HeroSection from '@/components/home/HeroSection';
 import ShopByCategory from '@/components/home/ShopByCategory';

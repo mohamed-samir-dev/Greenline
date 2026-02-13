@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X, UserPlus, LogOut } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useUser } from '@/contexts/UserContext';
 import { logoutUser } from '@/lib/firebase/auth';
 import CartIcon from '@/components/cart/CartIcon';
@@ -26,10 +26,6 @@ export default function Navbar() {
     logout();
     router.push('/');
   };
-  // Prefetch products page on mount
-  useEffect(() => {
-    router.prefetch('/products');
-  }, [router]);
   
   if (pathname?.startsWith('/admin')) return null;
 
@@ -40,10 +36,10 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center">
-              <Image src="/images/logo.png" alt="Green Line Logo" width={200} height={100} className="object-contain" />
+              <Image src="/images/logo.png" alt="Green Line Logo" width={200} height={100} className="object-contain" priority />
             </Link>
             <div className="flex items-center gap-10">
-              <Link href="/products" prefetch={true} className="text-base text-black font-semibold hover:text-green-600 transition-colors">Products</Link>
+              <Link href="/products" className="text-base text-black font-semibold hover:text-green-600 transition-colors">Products</Link>
               <Link href="/about" className="text-base text-black font-semibold hover:text-green-600 transition-colors">About Us</Link>
               <Link href="/contact" className="text-base text-black font-semibold hover:text-green-600 transition-colors">Contact</Link>
             </div>
@@ -80,7 +76,7 @@ export default function Navbar() {
         <div className="lg:hidden">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center">
-              <Image src="/images/logo.png" alt="Green Line Logo" width={200} height={100} className="object-contain" />
+              <Image src="/images/logo.png" alt="Green Line Logo" width={200} height={100} className="object-contain" priority />
             </Link>
             <div className="flex items-center gap-3">
               <button 
@@ -103,7 +99,7 @@ export default function Navbar() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex flex-col gap-4">
               <Link href="/" className="text-base text-black font-semibold hover:text-green-600 py-2" onClick={() => setIsMenuOpen(false)}>Home</Link>
-              <Link href="/products" prefetch={true} className="text-base text-black font-semibold hover:text-green-600 py-2" onClick={() => setIsMenuOpen(false)}>Products</Link>
+              <Link href="/products" className="text-base text-black font-semibold hover:text-green-600 py-2" onClick={() => setIsMenuOpen(false)}>Products</Link>
               <Link href="/about" className="text-base text-black font-semibold hover:text-green-600 py-2" onClick={() => setIsMenuOpen(false)}>About Us</Link>
               <Link href="/contact" className="text-base text-black font-semibold hover:text-green-600 py-2" onClick={() => setIsMenuOpen(false)}>Contact</Link>
               <div className="border-t border-green-100 pt-4 flex items-center gap-3">

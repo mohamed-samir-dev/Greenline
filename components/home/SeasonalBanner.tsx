@@ -9,8 +9,9 @@ export default function SeasonalBanner() {
           src="/images/tulips-banner.webp"
           alt="Spring tulips field"
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1280px"
           className="object-cover"
-          priority
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-black/10" />
         <div className="relative h-full flex flex-col sm:flex-row items-center justify-between px-6 sm:px-8 lg:px-12 py-6 gap-4">

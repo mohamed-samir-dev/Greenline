@@ -6,9 +6,11 @@ import { StructuredData } from '@/components/seo';
 import { generateOrganizationSchema, generateWebsiteSchema } from '@/lib/structured-data';
 
 const poppins = Poppins({
-  weight: ['400', '600', '700'],
+  weight: ['400', '600'],
   subsets: ["latin"],
   variable: "--font-poppins",
+  display: 'swap',
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -97,6 +99,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
         <meta name="theme-color" content="#22c55e" />
         <meta name="msapplication-TileColor" content="#22c55e" />
         <meta name="msapplication-config" content="/browserconfig.xml" />

@@ -13,7 +13,9 @@ export default function ShopByCategory() {
                 src={category.image}
                 alt={category.title}
                 fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover rounded-lg"
+                loading="lazy"
               />
             </div>
             <div className="p-3 sm:p-4 text-left">

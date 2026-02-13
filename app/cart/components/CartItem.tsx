@@ -29,7 +29,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartI
               className="object-cover"
             />
             <div className="absolute top-2 right-2">
-              <button className="bg-white/80 backdrop-blur-sm p-1.5 rounded-full shadow-sm hover:bg-white transition-colors">
+              <button className="bg-white/80 backdrop-blur-sm p-1.5 rounded-full shadow-sm hover:bg-white transition-colors" aria-label="Add to wishlist">
                 <Heart className="h-4 w-4 text-gray-600" />
               </button>
             </div>
@@ -63,6 +63,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartI
                   }
                 }}
                 className="text-gray-400 hover:text-red-500 transition-colors p-2 hover:bg-red-50 rounded-full shrink-0"
+                aria-label={`Remove ${item.name} from cart`}
               >
                 <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
@@ -94,6 +95,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartI
                       }
                     }}
                     className="p-2 sm:p-3 hover:bg-gray-100 transition-colors rounded-l-lg sm:rounded-l-xl"
+                    aria-label="Decrease quantity"
                   >
                     <Minus className="h-3 w-3 sm:h-4 sm:w-4 text-gray-600" />
                   </button>
@@ -110,6 +112,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartI
                     }}
                     className="p-2 sm:p-3 hover:bg-gray-100 transition-colors rounded-r-lg sm:rounded-r-xl"
                     disabled={item.quantity >= item.stockQuantity}
+                    aria-label="Increase quantity"
                   >
                     <Plus className="h-3 w-3 sm:h-4 sm:w-4 text-gray-600" />
                   </button>
