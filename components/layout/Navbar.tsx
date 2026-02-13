@@ -47,19 +47,19 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             {user && <UserProfileCircle user={user} />}
             {!user && (
-              <Link href="/register" className="p-2 bg-green-200 rounded hover:bg-green-100" aria-label="تسجيل حساب جديد">
+              <Link href="/register" className="min-w-[44px] min-h-[44px] p-2.5 bg-green-200 rounded hover:bg-green-100 flex items-center justify-center" aria-label="تسجيل حساب جديد">
                 <UserPlus className="h-5 w-5 text-gray-700" />
               </Link>
             )}
             {user && (
-              <button onClick={handleLogout} className="p-2 bg-green-200 rounded hover:bg-green-100" aria-label="تسجيل الخروج">
+              <button onClick={handleLogout} className="min-w-[44px] min-h-[44px] p-2.5 bg-green-200 rounded hover:bg-green-100 flex items-center justify-center" aria-label="تسجيل الخروج">
                 <LogOut className="h-5 w-5 text-gray-700" />
               </button>
             )}
             <div className="relative">
               <button 
                 onClick={() => setIsMiniCartOpen(!isMiniCartOpen)}
-                className="p-2 bg-green-200 rounded hover:bg-green-100"
+                className="min-w-[44px] min-h-[44px] p-2.5 bg-green-200 rounded hover:bg-green-100 flex items-center justify-center"
                 aria-label="عربة التسوق"
               >
                 <CartIcon />
@@ -81,12 +81,12 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-2 bg-green-200 rounded hover:bg-green-100"
+                className="min-w-[44px] min-h-[44px] p-2.5 bg-green-200 rounded hover:bg-green-100 flex items-center justify-center"
                 aria-label="Menu"
               >
                 {isMenuOpen ? <X className="h-5 w-5 text-gray-700" /> : <Menu className="h-5 w-5 text-gray-700" />}
               </button>
-              <CartIcon className="p-2 bg-green-200 rounded hover:bg-green-100" />
+              <CartIcon className="min-w-[44px] min-h-[44px] p-2.5 bg-green-200 rounded hover:bg-green-100 flex items-center justify-center" />
             </div>
           </div>
 
