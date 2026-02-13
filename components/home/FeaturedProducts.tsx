@@ -6,6 +6,7 @@ import Link from 'next/link';
 const bgColors = ['bg-teal-600', 'bg-red-600', 'bg-green-600', 'bg-amber-700'];
 
 async function getProducts() {
+  if (!adminDb) return [];
   try {
     const snapshot = await adminDb.collection('products').limit(4).get();
     return snapshot.docs.map((doc) => ({
